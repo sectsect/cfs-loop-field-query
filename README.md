@@ -1,5 +1,5 @@
 # CFS Loop Field Query
-### Modify the Query multiple Events in a post For Custom Field Suite "Loop Field".  
+### Modify the Query multiple dates in a post For Custom Field Suite "Loop Field".  
 
 > **NOTE**  
 You must be active Custom Field Suite plug-in <https://wordpress.org/plugins/custom-field-suite/>  
