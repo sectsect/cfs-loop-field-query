@@ -43,10 +43,10 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     ?>
     <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
     <?php
-        $post_id  = $post->ID;
-        $perm	 = get_the_permalink();
-        $date	 = date_i18n('Ymd', strtotime($post->date));
-        $title	= get_the_title();
+        $date       = date_i18n('Ymd', strtotime($post->date));
+        $post_id    = $post->ID;
+        $perm       = get_the_permalink();
+        $title      = get_the_title();
         array_push($ary, array('date' => $date, 'id' => $post_id, 'permlink' => $perm, 'title' => $title));
     ?>
     <?php endwhile; ?>
