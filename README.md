@@ -1,11 +1,13 @@
 # CFS Loop Field Query
-Modify the Query multiple Events in a post For Custom Field Suite "Loop Field".  
+### Modify the Query multiple Events in a post For Custom Field Suite "Loop Field".  
 
-* You must be active Custom Field Suite plug-in <https://wordpress.org/plugins/custom-field-suite/>
-* Download the cfs-loop-field-query.zip file to your computer.  
-* Unzip the file.  
-* Upload the cfs-loop-field-query directory to your /wp-content/plugins/ directory.  
-* Activate the plugin through the 'Plugins' menu in WordPress.  
+> **NOTE**  
+You must be active Custom Field Suite plug-in <https://wordpress.org/plugins/custom-field-suite/>  
+
+ 1. Download the cfs-loop-field-query.zip file to your computer.  
+ 2. Unzip the file.  
+ 3. Upload the cfs-loop-field-query directory to your /wp-content/plugins/ directory.  
+ 4. Activate the plugin through the 'Plugins' menu in WordPress.  
 That's it. You can access the some setting by going to Settings -> CFS Loop Field Query.  
 
 
