@@ -2,7 +2,7 @@
 /*
 Plugin Name: CFS Loop-Field Query for Events
 Plugin URI: http://www.ilovesect.com/
-Description: Modify the Query multiple Events in a post For Custom Field Suite "Loop Field".
+Description: Modify the Query multiple dates in a post For Custom Field Suite "Loop Field".
 Author: SECT INTERACTIVE AGENCY
 Version: 1.0
 Author URI: http://www.ilovesect.com/
