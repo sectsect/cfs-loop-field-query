@@ -64,5 +64,3 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         require_once 'Calendar/Month/Weeks.php';
         calendar($ary, 0);
     ?>
-
-> **NOTE** : This Plugin includes adding Time-Picker Field.
