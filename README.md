@@ -11,8 +11,11 @@ You must be active Custom Field Suite plug-in <https://wordpress.org/plugins/cus
  4. Activate the plugin through the 'Plugins' menu in WordPress.  
 That's it. You can access the some setting by going to Settings -> CFS Loop Field Query.  
 
-> **TIP** : If you want to apply to some existing article, resave the article.
+#### TIP
+* If you want to apply to some existing article, resave the article.  
+* This Plugin includes adding Time-Picker Field.
 
+### Example
 You can get a sub query using the `new CFS_LFQ_Query()`
 
 #### Example: Sub Query
@@ -61,3 +64,5 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         require_once 'Calendar/Month/Weeks.php';
         calendar($ary, 0);
     ?>
+
+> **NOTE** : This Plugin includes adding Time-Picker Field.
