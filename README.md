@@ -12,7 +12,7 @@ That's it. You can access the some setting by going to Settings -> CFS Loop Fiel
 You can get a sub query using the `new CFS_LFQ_Query()`
 
 ### Example: Sub Query
-        <?php
+    <?php
         $ary	 = array();
         $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
         $perpage = 10;
@@ -30,7 +30,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 
 ### Example: Sub Query For Calendar
 
-        <?php
+    <?php
         $ary	 = array();
         $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
         $perpage = -1;
