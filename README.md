@@ -31,15 +31,14 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     <?php wp_reset_postdata(); ?>
 
 ### Example: Sub Query For Calendar
-
     <?php
         $ary	 = array();
         $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
         $perpage = -1;
     	$offset  = ($page - 1) * $perpage;
         $args    = array(
-            'posts_per_page' => $perpage,
-            'calendar'	   => true		// For get the data from not today but first day in this month.
+            'posts_per_page'    => $perpage,
+            'calendar'          => true		// For get the data from not today but first day in this month.
         );
         $query = new CFS_LFQ_Query($args);
     ?>
