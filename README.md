@@ -1,4 +1,6 @@
-# CFS Loop Field Query
+# ![Alt text](images/logo.jpg "SECT") CFS Loop Field Query
+
+
 ### Modify the Query multiple dates in a post For Custom Field Suite "Loop Field".  
 
 > **NOTE**  
