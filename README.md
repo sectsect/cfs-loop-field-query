@@ -61,7 +61,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     <?php wp_reset_postdata(); ?>
 
     <?php
-        // To Calendar Class
+        // Passing array to your Calendar Class.
         require_once 'Calendar/Month/Weeks.php';
         calendar($ary, 0);
     ?>
