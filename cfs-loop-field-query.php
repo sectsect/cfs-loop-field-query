@@ -203,11 +203,23 @@ function event_where( $where ){
     if(!is_date()){
         $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date >= $today ";
     }else{
-        $thedate = get_query_var('year').'-'.get_query_var('monthnum').'-'.get_query_var('day');
-        $thedate = date('Ymd', strtotime($thedate));
-
-        $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date = $thedate ";
-        var_dump(is_post_type_archive() . " / " . is_date());
+        if(is_year()){
+            $theyaer   = get_query_var('year');
+            $startday  = $theyaer . "-01-01";
+            $finishday = $theyaer . "-12-31";
+            $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date BETWEEN '$startday' AND '$finishday' ";
+        }
+        if(is_month()){
+            $themonth   = get_query_var('year')."-".get_query_var('monthnum');
+            $startday  = $themonth . "-01";
+            $finishday = $themonth . "-31";
+            $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date BETWEEN '$startday' AND '$finishday' ";
+        }
+        if(is_day()){
+            $thedate = get_query_var('year').'-'.get_query_var('monthnum').'-'.get_query_var('day');
+            $theday = date_i18n('Ymd', strtotime($thedate));
+            $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date = $theday ";
+        }
     }
 
     return $where;
