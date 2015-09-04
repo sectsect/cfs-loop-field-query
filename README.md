@@ -4,7 +4,7 @@
 ### Modify the Query multiple dates in a post For Custom Field Suite "Loop Field".  
 
 > **NOTE**  
-You must be active Custom Field Suite plug-in <https://wordpress.org/plugins/custom-field-suite/>  
+You must be active Custom Field Suite Plugin <https://wordpress.org/plugins/custom-field-suite/>  
 Create a Loop Field and Date Field in the Loop Field using CFS Plugin.
 
 #### Installation
