@@ -14,6 +14,7 @@ That's it. You can access the some setting by going to Settings -> CFS Loop Fiel
 #### TIP
 * If you want to apply to some existing article, resave the article.  
 * This Plugin includes adding Time-Picker Field.
+* Supports Page `is_date()`.
 
 ### Example
 You can get a sub query using the `new CFS_LFQ_Query()`
