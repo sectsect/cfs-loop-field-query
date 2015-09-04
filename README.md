@@ -3,6 +3,7 @@
 
 > **NOTE**  
 You must be active Custom Field Suite plug-in <https://wordpress.org/plugins/custom-field-suite/>  
+Create a Loop Field and Date Field in the Loop Field using CFS Plugin.
 
 #### Installation
  1. Download the cfs-loop-field-query.zip file to your computer.  
@@ -14,9 +15,9 @@ That's it. You can access the some setting by going to Settings -> CFS Loop Fiel
 #### TIP
 * If you want to apply to some existing article, resave the article.  
 * This Plugin includes adding Time-Picker Field.
-* Supports Page `is_date()`.
+* Supports Page `is_date()` includes `is_year()` `is_month()` `is_day()`.
 
-### Example
+### Usage Example
 You can get a sub query using the `new CFS_LFQ_Query()`
 
 #### Example: Sub Query
