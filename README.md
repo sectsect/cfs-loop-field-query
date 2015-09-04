@@ -14,7 +14,7 @@ Create a Loop Field and Date Field in the Loop Field using CFS Plugin.
  4. Activate the plugin through the 'Plugins' menu in WordPress.  
  You can access the some setting by going to Settings -> CFS Loop Field Query.
  5. Setting "Post Type Name", "Loop Field Name", "Date Field Name in Loop Feld".  
- That's it. The main query of post type have your set will be rewritten.
+ That's it. The main query of your select post types will be rewritten.
 
 #### TIP
 * If you want to apply to some existing article, resave the article.  
