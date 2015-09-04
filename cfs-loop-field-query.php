@@ -2,7 +2,7 @@
 /*
 Plugin Name: CFS Loop-Field Query for Events
 Plugin URI: http://www.ilovesect.com/
-Description: Modify the Query multiple dates in a post For Custom Field Suite "Loop Field".
+Description: Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".
 Author: SECT INTERACTIVE AGENCY
 Version: 1.0
 Author URI: http://www.ilovesect.com/
@@ -270,7 +270,8 @@ class cfs_time_picker_addon{
 ================================================== */
 add_action('admin_menu', 'cfs_lfq_menu');
 function cfs_lfq_menu() {
-	add_menu_page('CFS Loop Field Query', 'CFS Loop Field Query', 8, 'cfs_lfq_menu', 'cfs_lfq_options_page');		// 第三引数： 2 （管理者〜寄稿者）	5 （管理者〜編集者）	8 （管理者のみ）
+//	add_menu_page('CFS Loop Field Query', 'CFS Loop Field Query', 8, 'cfs_lfq_menu', 'cfs_lfq_options_page');		// 第三引数： 2 （管理者〜寄稿者）	5 （管理者〜編集者）	8 （管理者のみ）
+    add_options_page('CFS Loop Field Query', 'CFS Loop Field Query', 8, 'cfs_lfq_menu', 'cfs_lfq_options_page');		// 第三引数： 2 （管理者〜寄稿者）	5 （管理者〜編集者）	8 （管理者のみ）
 	add_action('admin_init', 'register_cfs_lfq_settings');
 }
 function register_cfs_lfq_settings() {

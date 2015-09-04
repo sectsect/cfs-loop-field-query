@@ -1,7 +1,7 @@
 # ![Alt text](images/logo.jpg "SECT") CFS Loop Field Query
 
 
-### Modify the Query multiple dates in a post For Custom Field Suite "Loop Field".  
+### Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".  
 
 > **NOTE**  
 You must be active Custom Field Suite Plugin <https://wordpress.org/plugins/custom-field-suite/>  
