@@ -45,7 +45,7 @@
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="cfs_lfq_datefield">- Date</label>
+							<label for="cfs_lfq_datefield">- Date<span style="display: block; font-size: 11px; font-weight: normal; margin-left: 10px;">Using "Date Picker"</span></label>
 						</th>
 						<td>
 							<input type="text" id="cfs_lfq_datefield" class="regular-text" name="cfs_lfq_datefield" value="<?php echo get_option('cfs_lfq_datefield'); ?>" style="width: 150px;">
@@ -53,7 +53,7 @@
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="cfs_lfq_datefield">- StartTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span></label>
+							<label for="cfs_lfq_datefield">- StartTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span><span style="display: block; font-size: 11px; font-weight: normal; margin-left: 10px;">Using "Time Picker"</span></label>
 						</th>
 						<td>
 							<input type="text" id="cfs_lfq_datefield" class="regular-text" name="cfs_lfq_starttimefield" value="<?php echo get_option('cfs_lfq_starttimefield'); ?>" style="width: 150px;">
@@ -61,7 +61,7 @@
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="cfs_lfq_datefield">- FinishTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span></label>
+							<label for="cfs_lfq_datefield">- FinishTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span><span style="display: block; font-size: 11px; font-weight: normal; margin-left: 10px;">Using "Time Picker"</span></label>
 						</th>
 						<td>
 							<input type="text" id="cfs_lfq_datefield" class="regular-text" name="cfs_lfq_finishtimefield" value="<?php echo get_option('cfs_lfq_finishtimefield'); ?>" style="width: 150px;">
