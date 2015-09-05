@@ -83,4 +83,4 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 ### Change log  
 - - -
 **version 1.1**
- * Support "StartTime" and "FinishTime" for each Date.
+ * Support "StartTime" and "FinishTime" for each Date in Loop Field.
