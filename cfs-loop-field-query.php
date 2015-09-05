@@ -38,7 +38,7 @@ function cfs_lfq_activate() {
 }
 
 /*==================================================
-	記事投稿時にCF"StartDate"を"wp_events"テーブルに保存
+	Save to "wp_cfs_loop_field_query" table.
 ================================================== */
 function save_event($params) {
 	if(get_post_type($params['post_data']['ID']) == CFS_LFQ_POST_TYPE && CFS()->get(CFS_LFQ_CFS_LOOP, $params['post_data']['ID'])){
@@ -75,7 +75,7 @@ function save_event($params) {
 add_action('cfs_after_save_input', 'save_event');
 
 /*==================================================
-	記事完全削除時に"wp_events"テーブル内、該当テーブルも削除
+	Delete the data in "wp_cfs_loop_field_query" table.
 ================================================== */
 add_action( 'before_delete_post', 'delete_event' );
 function delete_event($postID) {
@@ -270,7 +270,6 @@ class cfs_time_picker_addon{
 ================================================== */
 add_action('admin_menu', 'cfs_lfq_menu');
 function cfs_lfq_menu() {
-//	add_menu_page('CFS Loop Field Query', 'CFS Loop Field Query', 8, 'cfs_lfq_menu', 'cfs_lfq_options_page');		// 第三引数： 2 （管理者〜寄稿者）	5 （管理者〜編集者）	8 （管理者のみ）
     add_options_page('CFS Loop Field Query', 'CFS Loop Field Query', 8, 'cfs_lfq_menu', 'cfs_lfq_options_page');		// 第三引数： 2 （管理者〜寄稿者）	5 （管理者〜編集者）	8 （管理者のみ）
 	add_action('admin_init', 'register_cfs_lfq_settings');
 }
