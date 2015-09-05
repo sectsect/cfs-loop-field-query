@@ -1,4 +1,4 @@
-# ![Alt text](images/logo.jpg "SECT") CFS Loop Field Query <span style="font-weight: normal; font-size: 16px;">- For Events -<span>
+# ![Alt text](images/logo.jpg "SECT") CFS Loop Field Query - For Events -
 
 ### Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".  
 
@@ -58,7 +58,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     ?>
     <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
     <?php
-        $date       = date_i18n('Ymd', strtotime($post->date));
+        $date       = date('Ymd', strtotime($post->date));
         $post_id    = $post->ID;
         $perm       = get_the_permalink();
         $title      = get_the_title();
