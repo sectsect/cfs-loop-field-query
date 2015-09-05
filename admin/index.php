@@ -69,6 +69,7 @@
 					</tr>
 				</tbody>
 			</table>
+			<a href="https://github.com/sectsect/cfs-loop-field-query#-cfs-loop-field-query---for-events--" target="_blank">&gt; Document (Github)</a>
 			<?php submit_button(); ?>
 		</form>
 	</section>
