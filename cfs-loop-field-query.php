@@ -4,7 +4,7 @@ Plugin Name: CFS Loop-Field Query for Events
 Plugin URI: http://www.ilovesect.com/
 Description: Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".
 Author: SECT INTERACTIVE AGENCY
-Version: 1.0
+Version: 1.1
 Author URI: http://www.ilovesect.com/
 */
 
@@ -15,7 +15,8 @@ define('CFS_LFQ_POST_TYPE', get_option('cfs_lfq_posttype'));
 define('CFS_LFQ_TAXONOMY', get_option('cfs_lfq_taxonomy'));
 define('CFS_LFQ_CFS_LOOP', get_option('cfs_lfq_dategroup'));
 define('CFS_LFQ_CFS_LOOP_DATE', get_option('cfs_lfq_datefield'));
-//define('CFS_LFQ_CFS_LOOP_STARTTIME', 'starttime');
+define('CFS_LFQ_CFS_LOOP_STARTTIME', get_option('cfs_lfq_starttimefield'));
+define('CFS_LFQ_CFS_LOOP_FINISHTIME', get_option('cfs_lfq_finishtimefield'));
 
 if(is_admin()){
     register_activation_hook( __FILE__, 'cfs_lfq_activate' );
@@ -24,13 +25,16 @@ function cfs_lfq_activate() {
     global $wpdb;
     $cfs_lfq_db_version = '1.0';
     $installed_ver      = get_option( 'cfs_lfq_version' );
+    $charset_collate    = $wpdb->get_charset_collate();
     if( $installed_ver != $cfs_lfq_db_version ) {
         $sql = "CREATE TABLE " . TABLE_NAME . " (
               event_id bigint(20) NOT NULL AUTO_INCREMENT,
               post_id bigint(20) NOT NULL,
               date date NOT NULL,
+              starttime time,
+              finishtime time,
               PRIMARY KEY  (event_id, post_id)
-            ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+            ) $charset_collate;";
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
         update_option('cfs_lfq_version', $cfs_lfq_db_version);
@@ -51,25 +55,22 @@ function save_event($params) {
 		$result    = $wpdb->query($sql);
 
 		foreach($fields as $field){
-			$date = str_replace("-", "", $field[CFS_LFQ_CFS_LOOP_DATE]);
-			$sql = "INSERT INTO " . TABLE_NAME . " (post_id, date) VALUES ($postID, $date);";
-			$sql = $wpdb->prepare($sql);
-			$result = $wpdb->query($sql);
+			$date   = str_replace("-", "", $field[CFS_LFQ_CFS_LOOP_DATE]);
 
-			// $sql = "INSERT INTO $tablename (post_id, date) VALUES ($postID, $startdate) ON DUPLICATE KEY UPDATE StartDate = $startdate;";
-			// var_dump($sql); // debug
-			// $sql = $wpdb->prepare($sql);
-			// var_dump($sql); // debug
-			// $result = $wpdb->query($sql);
-			// var_dump($result);
+            if($field[CFS_LFQ_CFS_LOOP_STARTTIME]){
+                $stime  = str_replace(":", "", $field[CFS_LFQ_CFS_LOOP_STARTTIME].":00");
+            }else{
+                $stime  = 'null';
+            }
+            if($field[CFS_LFQ_CFS_LOOP_FINISHTIME]){
+                $ftime  = str_replace(":", "", $field[CFS_LFQ_CFS_LOOP_FINISHTIME].":00");
+            }else{
+                $ftime  = 'null';
+            }
+			$sql    = "INSERT INTO " . TABLE_NAME . " (post_id, date, starttime, finishtime) VALUES ($postID, $date, $stime, $ftime);";
+			$sql    = $wpdb->prepare($sql);
+			$result = $wpdb->query($sql);
 		}
-		// $sql1 = "SET @i := 0;";
-		// $sql2 = "UPDATE $tablename SET event_id = (@i := @i +1) ORDER BY date ASC;";
-		// $sql1 = $wpdb->prepare($sql1);
-		// $sql2 = $wpdb->prepare($sql2);
-		// $result1 = $wpdb->query($sql1);
-		// $result2 = $wpdb->query($sql2);
-		// var_dump($result1 . " / " . $result2);
 	}
 }
 add_action('cfs_after_save_input', 'save_event');
@@ -81,13 +82,11 @@ add_action( 'before_delete_post', 'delete_event' );
 function delete_event($postID) {
 	if(get_post_type($postID) == CFS_LFQ_POST_TYPE && CFS()->get(CFS_LFQ_CFS_LOOP, $postID)){
 		global $wpdb;
-		$sql = "DELETE FROM " . TABLE_NAME . " WHERE post_id = $postID;";
-		$sql = $wpdb->prepare($sql);
+		$sql    = "DELETE FROM " . TABLE_NAME . " WHERE post_id = $postID;";
+		$sql    = $wpdb->prepare($sql);
 		$result = $wpdb->query($sql);
 	}
 }
-
-
 
 /*==================================================
 	Modify the Main Query
@@ -177,8 +176,6 @@ class CFS_LFQ_Query extends WP_Query {
     //    remove_filter('posts_groupby', 'event_groupby', 10, 2);
 	}
 }
-
-
 /*==================================================
     functions
 ================================================== */
@@ -197,10 +194,8 @@ function event_join( $join ){
 }
 
 function event_where( $where ){
-    $today = date_i18n("Ymd");
-//    $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date >= $today ";
-
     if(!is_date()){
+        $today = date_i18n("Ymd");
         $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date >= $today ";
     }else{
         if(is_year()){
@@ -278,6 +273,8 @@ function register_cfs_lfq_settings() {
     register_setting('cfs_lfq-settings-group', 'cfs_lfq_taxonomy');
 	register_setting('cfs_lfq-settings-group', 'cfs_lfq_dategroup');
 	register_setting('cfs_lfq-settings-group', 'cfs_lfq_datefield');
+    register_setting('cfs_lfq-settings-group', 'cfs_lfq_starttimefield');
+    register_setting('cfs_lfq-settings-group', 'cfs_lfq_finishtimefield');
 }
 function cfs_lfq_options_page() {
 	require_once(plugin_dir_path( __FILE__ ) . "admin/index.php");

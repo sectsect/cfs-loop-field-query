@@ -14,6 +14,7 @@ Create a Loop Field and Date Field in the Loop Field using CFS Plugin.
  4. Activate the plugin through the 'Plugins' menu in WordPress.  
  You can access the some setting by going to Settings -> CFS Loop Field Query.
  5. Setting "Post Type Name", "Loop Field Name", "Date Field Name in Loop Feld".  
+ (Optional Field: "Taxonomy Name", "StartTime Field", "FinishTime Field")  
  That's it. The main query of your select post types will be rewritten.
 
 #### TIP
@@ -70,3 +71,13 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         require_once 'Calendar/Month/Weeks.php';
         calendar($ary, 0);
     ?>
+#### Example: Get the "Date", "StartTime" and "FinishTime"
+    <div id="date">
+        <?php echo date('Y-m-d', strtotime($post->date)); ?>
+    </div>
+    <time>
+        <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
+    </time>
+### Change log  
+#### version 1.1  
+ * Support "StartTime" and "FinishTime" for each Date.

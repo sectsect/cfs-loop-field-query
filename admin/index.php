@@ -32,12 +32,12 @@
 					</tr>
 				</tbody>
 			</table>
-			<h3>Field Settings</h3>
+			<h3>Field Settings<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Field Name)</span></h3>
 			<table class="form-table">
 				<tbody>
 					<tr>
 						<th scope="row">
-							<label for="cfs_lfq_dategroup">Loop Field Name</label>
+							<label for="cfs_lfq_dategroup">Loop</label>
 						</th>
 						<td>
 							<input type="text" id="cfs_lfq_dategroup" class="regular-text" name="cfs_lfq_dategroup" value="<?php echo get_option('cfs_lfq_dategroup'); ?>" style="width: 150px;">
@@ -45,10 +45,26 @@
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="cfs_lfq_datefield">Field Name in Loop Feld</label>
+							<label for="cfs_lfq_datefield">- Date</label>
 						</th>
 						<td>
 							<input type="text" id="cfs_lfq_datefield" class="regular-text" name="cfs_lfq_datefield" value="<?php echo get_option('cfs_lfq_datefield'); ?>" style="width: 150px;">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="cfs_lfq_datefield">- StartTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span></label>
+						</th>
+						<td>
+							<input type="text" id="cfs_lfq_datefield" class="regular-text" name="cfs_lfq_starttimefield" value="<?php echo get_option('cfs_lfq_starttimefield'); ?>" style="width: 150px;">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="cfs_lfq_datefield">- FinishTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span></label>
+						</th>
+						<td>
+							<input type="text" id="cfs_lfq_datefield" class="regular-text" name="cfs_lfq_finishtimefield" value="<?php echo get_option('cfs_lfq_finishtimefield'); ?>" style="width: 150px;">
 						</td>
 					</tr>
 				</tbody>
