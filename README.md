@@ -82,8 +82,8 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
     </time>
 ### Change log  
-**ver 1.1.1**
+##### ver 1.1.1
  * **Change**: If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: the day full)  
 
-**ver 1.1.0**
+##### ver 1.1.0
  * **Support**: "StartTime" and "FinishTime" for each Date in Loop Field.
