@@ -4,7 +4,7 @@ Plugin Name: CFS Loop-Field Query for Events
 Plugin URI: https://github.com/sectsect/cfs-loop-field-query
 Description: Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".
 Author: SECT INTERACTIVE AGENCY
-Version: 1.1
+Version: 1.1.1
 Author URI: http://www.ilovesect.com/
 */
 
@@ -195,25 +195,32 @@ function event_join( $join ){
 
 function event_where( $where ){
     if(!is_date()){
-        $today = date_i18n("Ymd");
-        $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date >= $today ";
+        // If you have set the 'finishtime', it does not appear that post when it passes your set time. (Default: the day full)
+        if(!CFS_LFQ_CFS_LOOP_FINISHTIME){
+            $today = date_i18n("Ymd");
+            $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date >= $today ";
+        }else{
+            $currenttime = date_i18n("YmdHis");
+            $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND TIMESTAMP(date,finishtime) > $currenttime ";
+        }
+
     }else{
         if(is_year()){
             $theyaer   = get_query_var('year');
             $startday  = $theyaer . "-01-01";
             $finishday = $theyaer . "-12-31";
-            $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date BETWEEN '$startday' AND '$finishday' ";
+            $where     = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date BETWEEN '$startday' AND '$finishday' ";
         }
         if(is_month()){
-            $themonth   = get_query_var('year')."-".get_query_var('monthnum');
+            $themonth  = get_query_var('year')."-".get_query_var('monthnum');
             $startday  = $themonth . "-01";
             $finishday = $themonth . "-31";
-            $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date BETWEEN '$startday' AND '$finishday' ";
+            $where     = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date BETWEEN '$startday' AND '$finishday' ";
         }
         if(is_day()){
             $thedate = get_query_var('year').'-'.get_query_var('monthnum').'-'.get_query_var('day');
-            $theday = date_i18n('Ymd', strtotime($thedate));
-            $where = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date = $theday ";
+            $theday  = date_i18n('Ymd', strtotime($thedate));
+            $where   = " AND post_type = '". CFS_LFQ_POST_TYPE . "' AND post_status = 'publish' AND date = $theday ";
         }
     }
 

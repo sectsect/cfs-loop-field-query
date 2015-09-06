@@ -22,6 +22,7 @@ Create a Loop Field and Date Field in the Loop Field using CFS Plugin.
 * If you want to apply to some existing article, resave the article.  
 * This Plugin includes adding Time-Picker Field in CFS.
 * Supports Page `is_date()` includes `is_year()` `is_month()` `is_day()`.
+* If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: The Day Full)
 
 ### Usage Example
 - - -
@@ -81,6 +82,8 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
     </time>
 ### Change log  
-- - -
-**version 1.1**
- * Support "StartTime" and "FinishTime" for each Date in Loop Field.
+**ver 1.1.1**
+ * **Change**: If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: the day full)  
+
+**ver 1.1.0**
+ * **Support**: "StartTime" and "FinishTime" for each Date in Loop Field.
