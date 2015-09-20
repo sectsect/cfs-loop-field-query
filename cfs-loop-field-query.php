@@ -399,7 +399,7 @@ function cfs_lfq_calendar($eventdata, $months)
     ?>
     <div>
         <header>
-        	<h4><?php echo $month->format('n月'); ?></h4>
+        	<h4><?php echo $month->format('M'); ?></h4>
         </header>
         <table cellspacing="0" cellpadding="0" border="0">
             <thead>
