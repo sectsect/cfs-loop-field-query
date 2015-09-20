@@ -47,6 +47,40 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 
 #### Example: Sub Query For Calendar
     <?php
+        $dates	 = array();
+        $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
+        $perpage = -1;
+    	$offset  = ($page - 1) * $perpage;
+        $args    = array(
+            'posts_per_page'    => $perpage,
+            'calendar'          => true		// For get the data from not today but first day in this month.
+        );
+        $query = new CFS_LFQ_Query($args);
+    ?>
+    <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
+    <?php
+        $date       = date('Ymd', strtotime($post->date));
+    	array_push($dates, $date);
+    ?>
+    <?php endwhile; endif; ?>
+    <?php wp_reset_postdata(); ?>
+
+    <?php
+        // Passing array to cfs_lfq Calendar Class.
+        $ary = array_unique($ary);
+        $date = new DateTime();
+        $months = array();
+        for ($i = 0; $i < 3; $i++){
+        	if($i > 0){
+        	    $date->modify('+1 months');
+        	}
+        	$m = $date->format('Ymd');
+        	array_push($months, $m);
+        }
+        cfs_lfq_calendar($dates, $months);
+    ?>
+#### Example: Sub Query For Calendar (Your Calendar Class)
+    <?php
         $ary	 = array();
         $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
         $perpage = -1;
@@ -65,8 +99,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         $title      = get_the_title();
         array_push($ary, array('date' => $date, 'id' => $post_id, 'permlink' => $perm, 'title' => $title));
     ?>
-    <?php endwhile; ?>
-    <?php endif;?>
+    <?php endwhile; endif; ?>
     <?php wp_reset_postdata(); ?>
 
     <?php
@@ -82,8 +115,11 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
     </time>
 ### Change log  
-##### ver 1.1.1
+#### 1.2.0
+ * **Add**: function for Calendar `cfs_lfq_calendar()`. Using [CalendR](https://github.com/yohang/CalendR).  
+
+#### 1.1.1
  * **Change**: If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: the day full)  
 
-##### ver 1.1.0
+#### 1.1.0
  * **Support**: "StartTime" and "FinishTime" for each Date in Loop Field.

@@ -44,22 +44,16 @@ class cfs_time_picker extends cfs_field
         <table>
             <tr>
                 <td>
-                    <select name="<?php echo $field->input_name;
-        ?>[hour]" class="<?php echo $field->input_class;
-        ?>">
-                        <?php echo implode("\n", $hours);
-        ?>
+                    <select name="<?php echo $field->input_name; ?>[hour]" class="<?php echo $field->input_class; ?>">
+                        <?php echo implode("\n", $hours); ?>
                     </select>
                 </td>
                 <td>
                     :
                 </td>
                 <td>
-                    <select name="<?php echo $field->input_name;
-        ?>[minute]" class="<?php echo $field->input_class;
-        ?>">
-                        <?php echo implode("\n", $minutes);
-        ?>
+                    <select name="<?php echo $field->input_name; ?>[minute]" class="<?php echo $field->input_class; ?>">
+                        <?php echo implode("\n", $minutes); ?>
                     </select>
                 </td>
             </tr>

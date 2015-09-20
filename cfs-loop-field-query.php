@@ -1,11 +1,10 @@
 <?php
-
 /*
 Plugin Name: CFS Loop-Field Query for Events
 Plugin URI: https://github.com/sectsect/cfs-loop-field-query
 Description: Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".
 Author: SECT INTERACTIVE AGENCY
-Version: 1.1.1
+Version: 1.2.0
 Author URI: http://www.ilovesect.com/
 */
 
@@ -111,13 +110,15 @@ function cfs_lfq_pre_get_posts($query)
     // }
 
     if ($query->is_post_type_archive(CFS_LFQ_POST_TYPE)) {
-        $query->set('posts_per_page', 3);
+        $query->set('posts_per_page', -1);
 
         add_filter('posts_fields', 'event_fields', 10, 2);
         add_filter('posts_join', 'event_join', 10, 2);
         add_filter('posts_where', 'event_where', 10, 2);
         add_filter('posts_orderby', 'event_orderby', 10, 2);
-    //    add_filter('posts_groupby', 'event_groupby', 10, 2);        // ========== 投稿の重複出力を切る ==========
+        // if (!is_date()) {
+        //     add_filter('posts_groupby', 'event_groupby', 10, 2);        // ========== 投稿の重複出力を切る ==========
+        // }
     }
 
     if (CFS_LFQ_TAXONOMY) {
@@ -294,7 +295,7 @@ class cfs_time_picker_addon
 add_action('admin_menu', 'cfs_lfq_menu');
 function cfs_lfq_menu()
 {
-    add_options_page('CFS Loop Field Query', 'CFS Loop Field Query', 8, 'cfs_lfq_menu', 'cfs_lfq_options_page');        // 第三引数： 2 （管理者〜寄稿者）	5 （管理者〜編集者）	8 （管理者のみ）
+    add_options_page('CFS Loop Field Query', 'CFS Loop Field Query', 8, 'cfs_lfq_menu', 'cfs_lfq_options_page');
     add_action('admin_init', 'register_cfs_lfq_settings');
 }
 function register_cfs_lfq_settings()
@@ -341,4 +342,101 @@ function cfs_lfq_options_page()
 //     $title	  = $value->post_title;
 //     array_push($ary, array('date' => $date, 'id' => $post_id, 'permlink' => $perm, 'title' => $title));
 // }
-;
+
+
+/*==================================================
+    Get Custom post type day_link
+================================================== */
+function get_post_type_date_link($post_type, $year, $month = 0, $day = 0)
+{
+    global $wp_rewrite;
+    $post_type_obj = get_post_type_object($post_type);
+    $post_type_slug = $post_type_obj->rewrite['slug'] ? $post_type_obj->rewrite['slug'] : $post_type_obj->name;
+    if ($day) { // day archive link
+        // set to today's values if not provided
+        if (!$year) {
+            $year = gmdate('Y', current_time('timestamp'));
+        }
+        if (!$month) {
+            $month = gmdate('m', current_time('timestamp'));
+        }
+        $link = $wp_rewrite->get_day_permastruct();
+    } elseif ($month) { // month archive link
+        if (!$year) {
+            $year = gmdate('Y', current_time('timestamp'));
+        }
+        $link = $wp_rewrite->get_month_permastruct();
+    } else { // year archive link
+        $link = $wp_rewrite->get_year_permastruct();
+    }
+    if (!empty($link)) {
+        $link = str_replace('%year%', $year, $link);
+        $link = str_replace('%monthnum%', zeroise(intval($month), 2), $link);
+        $link = str_replace('%day%', zeroise(intval($day), 2), $link);
+
+        return home_url("$post_type_slug$link");
+    }
+
+    return home_url("$post_type_slug");
+}
+
+/*==================================================
+    Load CalendR Class
+================================================== */
+require_once plugin_dir_path(__FILE__).'CalendR/vendor/autoload.php';
+/*==================================================
+    Event Calendar (archive)
+================================================== */
+function cfs_lfq_calendar($eventdata, $months)
+{
+    if (CFS_LFQ_POST_TYPE):
+    $weekdayBase = 1;  // 0:sunday ～ 6:saturday
+    $locale = new WP_Locale();
+    $wd = array_values($locale->weekday_abbrev);
+    $factory = new CalendR\Calendar();
+    foreach ($months as $month):
+        $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
+    ?>
+    <div>
+        <header>
+        	<h4><?php echo $month->format('n月'); ?></h4>
+        </header>
+        <table cellspacing="0" cellpadding="0" border="0">
+            <thead>
+        		<tr>
+        			<?php
+                        for ($i = 0; $i < 7; ++$i) {
+                            $weekday = ($weekdayBase + $i) % 7;
+                            $weekdayText = $wd[$weekday];
+                            echo '<th class="'.'dayweek'.'">', $weekdayText, '</th>';
+                        }
+                    ?>
+        		</tr>
+        	</thead>
+        	<tbody>
+                <?php foreach ($month as $week): ?>
+                    <tr>
+                        <?php foreach ($week as $day): ?>
+                            <td class="<?php echo mb_strtolower($day->format('D')); ?><?php if (!$month->includes($day)): ?> out-of-month<?php endif; ?>">
+                                <?php
+                                    if ($month->includes($day) && in_array($day->format('Ymd'), $eventdata)) {
+                                        $href = get_post_type_date_link(CFS_LFQ_POST_TYPE, $day->format('Y'), $day->format('m'), $day->format('d'));
+                                        $dayText = '<a href="'.$href.'"><span>'.$day->format('j').'</span></a>';
+                                    } else {
+                                        $dayText = $day->format('j');
+                                    }
+                                    echo $dayText;
+                                ?>
+                            </td>
+                        <?php endforeach ?>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+<?php
+    endforeach;
+    endif;
+}
+
+?>
