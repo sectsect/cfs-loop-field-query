@@ -1,6 +1,6 @@
 # ![Alt text](images/logo.jpg "SECT") CFS Loop Field Query - For Events -
 
-### Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".  
+### Modify the Query to multiple dates in a post For [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) "Loop Field".  
 
 > **NOTE**  
 You must be active [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) Plugin.  
