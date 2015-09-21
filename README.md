@@ -117,7 +117,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     </time>
 ### Change log  
 #### 1.2.0
- * **Add**: function for Calendar `cfs_lfq_calendar()`. Using [CalendR](https://github.com/yohang/CalendR).  
+ * **Add**: function for Calendar `cfs_lfq_calendar()`. Using [CalendR](https://github.com/yohang/CalendR) PHP Class.  
 
 #### 1.1.1
  * **Change**: If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: the day full)  
