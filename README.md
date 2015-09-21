@@ -3,7 +3,7 @@
 ### Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".  
 
 > **NOTE**  
-You must be active [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) Plugin  
+You must be active [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) Plugin.  
 Create a Loop Field and Date Field in the Loop Field using CFS Plugin.
 
 #### Installation
@@ -45,39 +45,40 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     <?php endif;?>
     <?php wp_reset_postdata(); ?>
 
-#### Example: Sub Query For Calendar
+#### Example: Sub Query For Calendar  
     <?php
-        $dates	 = array();
+        $dates   = array();
         $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
         $perpage = -1;
-    	$offset  = ($page - 1) * $perpage;
+        $offset  = ($page - 1) * $perpage;
         $args    = array(
-            'posts_per_page'    => $perpage,
-            'calendar'          => true		// For get the data from not today but first day in this month.
+            'posts_per_page' => $perpage,
+            'calendar'       => true, // For get the data from not today but first day in this month.
         );
         $query = new CFS_LFQ_Query($args);
     ?>
-    <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
+    <?php if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post(); ?>
     <?php
-        $date       = date('Ymd', strtotime($post->date));
-    	array_push($dates, $date);
+        $date = date('Ymd', strtotime($post->date));
+        array_push($dates, $date);
     ?>
     <?php endwhile; endif; ?>
     <?php wp_reset_postdata(); ?>
 
     <?php
         // Passing array to cfs_lfq Calendar Class.
-        $ary = array_unique($ary);
-        $date = new DateTime();
+        $dates  = array_unique($dates); // Remove some Duplicate Values(Day)
+        $date   = new DateTime();
         $months = array();
-        for ($i = 0; $i < 3; $i++){
-        	if($i > 0){
-        	    $date->modify('+1 months');
-        	}
-        	$m = $date->format('Ymd');
-        	array_push($months, $m);
+        for ($i = 0; $i < 3; ++$i) {
+            if ($i > 0) {
+                $date->modify('first day of +1 month');
+            } else {
+                $date->modify('first day of this month');
+            }
+            array_push($months, $date->format('Ymd'));
         }
-        cfs_lfq_calendar($dates, $months);
+        cfs_lfq_calendar($dates, $months);  // 3 months Calendar
     ?>
 #### Example: Sub Query For Calendar (Your Calendar Class)
     <?php
