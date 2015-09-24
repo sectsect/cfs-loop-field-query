@@ -116,6 +116,9 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
     </time>
 ### Change log  
+#### 1.2.1
+ * **Change**: field type of "Post Type" & "Taxonomy" from `text` to `select` in admin-page.  
+
 #### 1.2.0
  * **Add**: function for Calendar `cfs_lfq_calendar()`. Using [CalendR](https://github.com/yohang/CalendR) PHP Class.  
 
