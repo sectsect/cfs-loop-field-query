@@ -117,7 +117,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     </time>
 ### Change log  
 #### 1.2.1
- * **Change**: field type of "Post Type" & "Taxonomy" from `text` to `select` in admin-page.  
+ * **Change**: Some field type on Admin-Page from the `<input type="text">` to `<select>`.  
 
 #### 1.2.0
  * **Add**: function for Calendar `cfs_lfq_calendar()`. Using [CalendR](https://github.com/yohang/CalendR) PHP Class.  
