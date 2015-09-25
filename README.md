@@ -1,10 +1,12 @@
 # ![Alt text](images/logo.jpg "SECT") CFS Loop Field Query - For Events -
 
-### Modify the Query to multiple dates in a post For [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) "Loop Field".  
+### Modify the Query to multiple dates in a post For [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) "Loop Field".
 
-> **NOTE**  
-You must be active [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) Plugin.  
-Create a Loop Field and Date Field in the Loop Field using CFS Plugin.
+#### Requirements
+- - -
+* PHP 5.3+
+* Activation [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) Plugin.
+* Create a Loop Field and Date Field in the Loop Field using [CFS](https://wordpress.org/plugins/custom-field-suite/) Plugin.
 
 #### Installation
 - - -
