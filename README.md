@@ -118,6 +118,9 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
     </time>
 ### Change log  
+#### 1.2.2
+ * **Add**: Automatically sort the loop field for the date in ascending order before you save the data.
+
 #### 1.2.1
  * **Change**: Some field type on Admin-Page from the `<input type="text">` to `<select>`.  
 

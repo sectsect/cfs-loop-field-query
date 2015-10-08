@@ -4,7 +4,7 @@ Plugin Name: CFS Loop-Field Query for Events
 Plugin URI: https://github.com/sectsect/cfs-loop-field-query
 Description: Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".
 Author: SECT INTERACTIVE AGENCY
-Version: 1.2.1
+Version: 1.2.2
 Author URI: http://www.ilovesect.com/
 */
 
@@ -45,12 +45,23 @@ function cfs_lfq_activate()
 /*==================================================
     Save to "wp_cfs_loop_field_query" table.
 ================================================== */
+// Sorting by the value of the second dimension in the array of two-dimensional array.
+function sortArrayByKey( &$array, $sortKey, $sortType = SORT_ASC ) {
+    $tmpArray = array();
+    foreach ( $array as $key => $row ) {
+        $tmpArray[$key] = $row[$sortKey];
+    }
+    array_multisort( $tmpArray, $sortType, $array );
+    unset( $tmpArray );
+}
+
 function save_event($params)
 {
     if (get_post_type($params['post_data']['ID']) == CFS_LFQ_POST_TYPE && CFS()->get(CFS_LFQ_CFS_LOOP, $params['post_data']['ID'])) {
         global $wpdb;
         $postID = $params['post_data']['ID'];
         $fields = CFS()->get(CFS_LFQ_CFS_LOOP, $postID);
+        sortArrayByKey( $fields, CFS_LFQ_CFS_LOOP_DATE );  // sorting by "date"
 
         $sql = 'DELETE FROM '.TABLE_NAME." WHERE post_id = $postID;";
         $sql = $wpdb->prepare($sql);
