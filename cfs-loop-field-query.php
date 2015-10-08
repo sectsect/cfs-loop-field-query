@@ -117,7 +117,7 @@ function cfs_lfq_pre_get_posts($query)
         add_filter('posts_where', 'event_where', 10, 2);
         add_filter('posts_orderby', 'event_orderby', 10, 2);
         // if (!is_date()) {
-        //     add_filter('posts_groupby', 'event_groupby', 10, 2);        // ========== 投稿の重複出力を切る ==========
+        //     add_filter('posts_groupby', 'event_groupby', 10, 2);        // ========== Disabled the outputs to duplicate post on Page "post_type_archive". (It is sorted based on the last date to hold) ==========
         // }
     }
 
@@ -127,7 +127,7 @@ function cfs_lfq_pre_get_posts($query)
             add_filter('posts_join', 'event_join', 10, 2);
             add_filter('posts_where', 'event_where', 10, 2);
             add_filter('posts_orderby', 'event_orderby', 10, 2);
-        //    add_filter('posts_groupby', 'event_groupby', 10, 2);        // ========== 投稿の重複出力を切る ==========
+        //    add_filter('posts_groupby', 'event_groupby', 10, 2);        // ========== Disabled the outputs to duplicate post on Page "taxonomy". (It is sorted based on the last date to hold) ==========
         }
     }
 }
