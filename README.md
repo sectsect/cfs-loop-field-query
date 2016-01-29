@@ -118,17 +118,9 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
     </time>
 ### Change log  
-#### 1.2.2
- * **Add**: Automatically sort the loop field for the date in ascending order before you save the data.
-
-#### 1.2.1
- * **Change**: Some field type on Admin-Page from the `<input type="text">` to `<select>`.  
-
-#### 1.2.0
- * **Add**: function for Calendar `cfs_lfq_calendar()`. Using [CalendR](https://github.com/yohang/CalendR) PHP Class.  
-
-#### 1.1.1
- * **Change**: If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: the day full)  
-
-#### 1.1.0
- * **Support**: "StartTime" and "FinishTime" for each Date in Loop Field.
+ * **1.2.2** - **Add**: Automatically sort the loop field for the date in ascending order before you save the data.
+ * **1.2.1** - **Change**: Some field type on Admin-Page from the `<input type="text">` to `<select>`.
+ * **1.2.0** - **Add**: function for Calendar `cfs_lfq_calendar()`. Using [CalendR](https://github.com/yohang/CalendR) PHP Class.
+ * **1.1.1** - **Change**: If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: the day full)
+ * **1.1.0** - **Support**: Add support "StartTime" and "FinishTime" for each Date in Loop Field.
+ * **1.0.0** - Initial Release
