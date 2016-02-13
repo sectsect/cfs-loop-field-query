@@ -118,6 +118,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
     </time>
 ### Change log  
+ * **1.2.5** - **Update**: [CalendR](https://github.com/yohang/CalendR) PHP Class to 1.1.
  * **1.2.4** - **Add**: Add "today" class to current day for calendar.
  * **1.2.3** - **Add**: Add weekday class to table header for calendar.
  * **1.2.2** - **Add**: Automatically sort the loop field for the date in ascending order before you save the data.
