@@ -12,35 +12,46 @@
 namespace CalendR\Period;
 
 /**
- * Represents a Day
+ * Represents a Day.
  *
  * @author Yohan Giarelli <yohan@giarel.li>
  */
-class Day extends PeriodAbstract
+class Day extends PeriodAbstract implements \Iterator
 {
-    const MONDAY    = 1;
-    const TUESDAY   = 2;
+    const MONDAY = 1;
+    const TUESDAY = 2;
     const WEDNESDAY = 3;
-    const THURSDAY  = 4;
-    const FRIDAY    = 5;
-    const SATURDAY  = 6;
-    const SUNDAY    = 0;
+    const THURSDAY = 4;
+    const FRIDAY = 5;
+    const SATURDAY = 6;
+    const SUNDAY = 0;
 
     /**
-     * @param \DateTime $begin
-     * @param int       $firstWeekday
+     * @var PeriodInterface
      */
-    public function __construct(\DateTime $begin, $firstWeekday = Day::MONDAY)
-    {
-        $this->begin = clone $begin;
-        $this->end = clone $begin;
-        $this->end->add(new \DateInterval('P1D'));
+    private $current;
 
-        parent::__construct($firstWeekday);
+    /**
+     * @param \DateTime        $begin
+     * @param FactoryInterface $factory
+     */
+    public function __construct(\DateTime $begin, $factory = null)
+    {
+        parent::__construct($factory);
+        if ($this->getFactory()->getStrictDates() && !self::isValid($begin)) {
+            throw new Exception\NotADay();
+        }
+
+        // Not in strict mode, accept any timestamp and set the begin date back to the beginning of this period.
+        $this->begin = clone $begin;
+        $this->begin->setTime(0, 0, 0);
+
+        $this->end = clone $this->begin;
+        $this->end->add($this->getDateInterval());
     }
 
     /**
-     * Returns the period as a DatePeriod
+     * Returns the period as a DatePeriod.
      *
      * @return \DatePeriod
      */
@@ -50,7 +61,7 @@ class Day extends PeriodAbstract
     }
 
     /**
-     * Returns the day name (probably in english)
+     * Returns the day name (probably in english).
      *
      * @return string
      */
@@ -66,17 +77,66 @@ class Day extends PeriodAbstract
      */
     public static function isValid(\DateTime $start)
     {
-        return true;
+        return $start->format('H:i:s') == '00:00:00';
     }
 
     /**
-     * Returns a \DateInterval equivalent to the period
+     * Returns a \DateInterval equivalent to the period.
      *
      * @static
+     *
      * @return \DateInterval
      */
     public static function getDateInterval()
     {
         return new \DateInterval('P1D');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function current()
+    {
+        return $this->current;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next()
+    {
+        if (null === $this->current) {
+            $this->current = $this->getFactory()->createHour($this->begin);
+        } else {
+            $this->current = $this->current->getNext();
+            if (!$this->contains($this->current->getBegin())) {
+                $this->current = null;
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function key()
+    {
+        return (int) $this->current->getBegin()->format('G');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function valid()
+    {
+        return null !== $this->current;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rewind()
+    {
+        $this->current = null;
+        $this->next();
     }
 }

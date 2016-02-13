@@ -11,16 +11,18 @@
         "homepage": "http://yohan.giarel.li"
     }],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "symfony/options-resolver": "^2.3"
     },
 
     "require-dev": {
-        "twig/twig":                    "~1.13",
-        "silex/silex":                  "~1.1",
-        "doctrine/orm":                 "~2.3",
-        "doctrine/common":              "~2.3",
-        "phpunit/phpunit":              "~3.7",
-        "google/google-api-php-client": "0.6.2"
+        "doctrine/cache":               "^1.1",
+        "doctrine/common":              "^2.4",
+        "doctrine/orm":                 "^2.4",
+        "google/google-api-php-client": "^0.6.2",
+        "phpunit/phpunit":              "^4.0",
+        "silex/silex":                  "^1.1",
+        "twig/twig":                    "^1.13"
     },
 
     "autoload": {
@@ -28,7 +30,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "1.1.x-dev"
         }
     },
 

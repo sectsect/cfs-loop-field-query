@@ -3,31 +3,34 @@
 namespace CalendR\Period;
 
 /**
- * Represents a week
+ * Represents a week.
  *
  * @author Yohan Giarelli <yohan@giarel.li>
  */
 class Week extends PeriodAbstract implements \Iterator
 {
+    /**
+     * @var null|PeriodInterface
+     */
     private $current = null;
 
     /**
-     * @param \DateTime $start
-     * @param int       $firstWeekday
+     * @param \DateTime        $start
+     * @param FactoryInterface $factory
      *
      * @throws Exception\NotAWeek
      */
-    public function __construct(\DateTime $start, $firstWeekday = Day::MONDAY)
+    public function __construct(\DateTime $start, $factory = null)
     {
         if (!self::isValid($start)) {
-            throw new Exception\NotAWeek;
+            throw new Exception\NotAWeek();
         }
 
         $this->begin = clone $start;
         $this->end = clone $start;
-        $this->end->add(new \DateInterval('P7D'));
+        $this->end->add($this->getDateInterval());
 
-        parent::__construct($firstWeekday);
+        parent::__construct($factory);
     }
 
     /**
@@ -39,7 +42,7 @@ class Week extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * Returns the period as a DatePeriod
+     * Returns the period as a DatePeriod.
      *
      * @return \DatePeriod
      */
@@ -59,7 +62,7 @@ class Week extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -67,12 +70,12 @@ class Week extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function next()
     {
         if (!$this->valid()) {
-            $this->current = new Day($this->begin, $this->firstWeekday);
+            $this->current = $this->getFactory()->createDay($this->begin);
         } else {
             $this->current = $this->current->getNext();
             if (!$this->contains($this->current->getBegin())) {
@@ -82,7 +85,7 @@ class Week extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -90,7 +93,7 @@ class Week extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function valid()
     {
@@ -98,7 +101,7 @@ class Week extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {
@@ -107,7 +110,7 @@ class Week extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * Returns the week number
+     * Returns the week number.
      *
      * @return string
      */
@@ -117,7 +120,7 @@ class Week extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * Returns a \DateInterval equivalent to the period
+     * Returns a \DateInterval equivalent to the period.
      *
      * @return \DateInterval
      */

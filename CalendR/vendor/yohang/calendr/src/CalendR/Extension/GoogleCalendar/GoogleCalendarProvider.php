@@ -3,12 +3,13 @@
 namespace CalendR\Extension\GoogleCalendar;
 
 use CalendR\Event\Provider\ProviderInterface;
-
 use CalendR\Extension\GoogleCalendar\Exception\OptionConflict;
 
 /**
  * Event provider.
- * Retrieve events from Google calendar id
+ * Retrieve events from Google calendar id.
+ *
+ * @deprecated Will be removed from 2.0
  */
 class GoogleCalendarProvider implements ProviderInterface
 {
@@ -33,7 +34,7 @@ class GoogleCalendarProvider implements ProviderInterface
     }
 
     /**
-     * Return the provider's Google calendar service
+     * Return the provider's Google calendar service.
      *
      * @return \Google_CalendarService the provider's Google calendar service
      */
@@ -43,14 +44,14 @@ class GoogleCalendarProvider implements ProviderInterface
     }
 
     /**
-     * Search ids of calendar from the Google service
+     * Search ids of calendar from the Google service.
      *
      * @return array
      */
     protected function discoverCalendars()
     {
         $calendars = array();
-        $response = $this->service->calendarList->listCalendarList(array('fields'=>'items/id'));
+        $response = $this->service->calendarList->listCalendarList(array('fields' => 'items/id'));
 
         if (isset($response['items'])) {
             foreach ($response['items'] as $id) {
@@ -62,7 +63,7 @@ class GoogleCalendarProvider implements ProviderInterface
     }
 
     /**
-     * return the GoogleCalendarEvent corresponding to calendar#events $item
+     * return the GoogleCalendarEvent corresponding to calendar#events $item.
      *
      * @param array  $item
      * @param string $calendarId
@@ -75,8 +76,8 @@ class GoogleCalendarProvider implements ProviderInterface
         $end = new \DateTime($item['end']['dateTime']);
 
         if (isset($item['start']['timeZone']) && isset($item['end']['timeZone'])) {
-                $begin = new \DateTime($item['start']['dateTime'], new \DateTimeZone($item['start']['timeZone']));
-                $end = new \DateTime($item['end']['dateTime'], new \DateTimeZone($item['end']['timeZone']));
+            $begin = new \DateTime($item['start']['dateTime'], new \DateTimeZone($item['start']['timeZone']));
+            $end = new \DateTime($item['end']['dateTime'], new \DateTimeZone($item['end']['timeZone']));
         }
 
         return new GoogleCalendarEvent(
@@ -91,7 +92,7 @@ class GoogleCalendarProvider implements ProviderInterface
     }
 
     /**
-     * Return the GoogleCalendarEvent array from the calendar#events $GoogleCalendar
+     * Return the GoogleCalendarEvent array from the calendar#events $GoogleCalendar.
      *
      * @param array  $googleEvents
      * @param string $calendarId
@@ -101,20 +102,20 @@ class GoogleCalendarProvider implements ProviderInterface
      */
     protected function createEvents($googleEvents, $calendarId, array $optParams)
     {
-        $events     = array();
+        $events = array();
         $recurrings = array();
         foreach ($googleEvents['items'] as $item) {
-          if(!(isset($item['start']) && isset($item['end']))) {
-              continue;
-          }
+            if (!(isset($item['start']) && isset($item['end']))) {
+                continue;
+            }
 
-          if ($this->isRecurring($item)) {
-              $recurrings[] = $item;
+            if ($this->isRecurring($item)) {
+                $recurrings[] = $item;
 
-              continue;
-          }
+                continue;
+            }
 
-          $events[] = $this->createEvent($item, $calendarId);
+            $events[] = $this->createEvent($item, $calendarId);
         }
 
         foreach ($recurrings as $recurring) {
@@ -134,13 +135,14 @@ class GoogleCalendarProvider implements ProviderInterface
 
     /**
      * Return events that matches to $begin && $end from calendars' id find in $options
-     * $end date should be exclude
+     * $end date should be exclude.
      *
      * @param \DateTime $begin
      * @param \DateTime $end
      * @param array     $options
      *
      * @return GoogleCalendarEvent[]
+     *
      * @throws Exception\OptionConflict
      */
     public function getEvents(\DateTime $begin, \DateTime $end, array $options = array())
@@ -175,16 +177,16 @@ class GoogleCalendarProvider implements ProviderInterface
         }
 
         foreach ($calendars as $calendar) {
-            $events = array_merge($events,$this->findEventsByCalendarId($calendar, $begin, $end));
+            $events = array_merge($events, $this->findEventsByCalendarId($calendar, $begin, $end));
         }
 
         return $events;
     }
 
     /**
-     * Return the GoogleCalendarEvent array from the String $calendarId
+     * Return the GoogleCalendarEvent array from the String $calendarId.
      *
-     * @param $calendarId
+     * @param           $calendarId
      * @param \DateTime $begin
      * @param \DateTime $end
      *
@@ -192,18 +194,18 @@ class GoogleCalendarProvider implements ProviderInterface
      */
     private function findEventsByCalendarId($calendarId, \DateTime $begin, \DateTime $end)
     {
-      $optParams = array(
-        'timeMin' => $begin->format('Y-m-d\TH:i:sP'),
-        'timeMax' => $end->format('Y-m-d\TH:i:sP')
-      );
+        $optParams = array(
+            'timeMin' => $begin->format('Y-m-d\TH:i:sP'),
+            'timeMax' => $end->format('Y-m-d\TH:i:sP'),
+        );
 
-      $response = $this->service->events->listEvents($calendarId, $optParams);
+        $response = $this->service->events->listEvents($calendarId, $optParams);
 
-      if (isset($response['items'])) {
-        return $this->createEvents($response, $calendarId, $optParams);
-      }
+        if (isset($response['items'])) {
+            return $this->createEvents($response, $calendarId, $optParams);
+        }
 
-      return array();
+        return array();
     }
 
     /**

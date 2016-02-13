@@ -27,15 +27,17 @@ class Basic implements ProviderInterface, \IteratorAggregate, \Countable
     protected $events = array();
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getEvents(\DateTime $begin, \DateTime $end, array $options = array())
     {
         $events = array();
         foreach ($this->events as $event) {
             if (
-                $event->contains($begin) || $event->contains($end) ||
-                (1 === $event->getBegin()->diff($begin)->invert && 0 === $event->getEnd()->diff($end)->invert)
+                ($event->getBegin() >= $begin && $event->getBegin() < $end) ||
+                ($event->getEnd() > $begin && $event->getEnd() <= $end) ||
+                ($begin <= $event->getBegin() && $event->getEnd() <= $end) ||
+                ($event->getBegin() <= $begin && $end <= $event->getEnd())
             ) {
                 $events[] = $event;
             }
@@ -45,7 +47,7 @@ class Basic implements ProviderInterface, \IteratorAggregate, \Countable
     }
 
     /**
-     * Adds an event to the provider
+     * Adds an event to the provider.
      *
      * @param EventInterface $event
      */
@@ -55,9 +57,9 @@ class Basic implements ProviderInterface, \IteratorAggregate, \Countable
     }
 
     /**
-     * Returns all events
+     * Returns all events.
      *
-     * @return array<EventInterface>
+     * @return EventInterface[]
      */
     public function all()
     {
@@ -65,7 +67,7 @@ class Basic implements ProviderInterface, \IteratorAggregate, \Countable
     }
 
     /**
-     * Retrieve an external iterator
+     * Retrieve an external iterator.
      *
      * @return \Traversable
      */

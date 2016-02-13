@@ -12,10 +12,12 @@
 namespace CalendR;
 
 use CalendR\Event\Manager;
+use CalendR\Period\Factory;
+use CalendR\Period\FactoryInterface;
 use CalendR\Period\PeriodInterface;
 
 /**
- * Factory class for calendar handling
+ * Factory class for calendar handling.
  *
  * @author Yohan Giarelli <yohan@giarel.li>
  */
@@ -27,9 +29,9 @@ class Calendar
     private $eventManager;
 
     /**
-     * @var int
+     * @var FactoryInterface
      */
-    private $firstWeekday = Period\Day::MONDAY;
+    protected $factory;
 
     /**
      * @param Manager $eventManager
@@ -45,14 +47,14 @@ class Calendar
     public function getEventManager()
     {
         if (null === $this->eventManager) {
-            $this->eventManager = new Manager;
+            $this->eventManager = new Manager();
         }
 
         return $this->eventManager;
     }
 
     /**
-     * @param \DateTime|int $yearOrStart
+     * @param $yearOrStart
      *
      * @return Period\Year
      */
@@ -62,14 +64,14 @@ class Calendar
             $yearOrStart = new \DateTime(sprintf('%s-01-01', $yearOrStart));
         }
 
-        return new Period\Year($yearOrStart, $this->firstWeekday);
+        return $this->getFactory()->createYear($yearOrStart);
     }
 
     /**
      * @param \DateTime|int $yearOrStart year if month is filled, month begin datetime otherwise
      * @param null|int      $month       number (1~12)
      *
-     * @return Period\Month
+     * @return PeriodInterface
      */
     public function getMonth($yearOrStart, $month = null)
     {
@@ -77,22 +79,24 @@ class Calendar
             $yearOrStart = new \DateTime(sprintf('%s-%s-01', $yearOrStart, $month));
         }
 
-        return new Period\Month($yearOrStart, $this->firstWeekday);
+        return $this->getFactory()->createMonth($yearOrStart);
     }
 
     /**
      * @param \DateTime|int $yearOrStart
      * @param null|int      $week
      *
-     * @return Period\Week
+     * @return PeriodInterface
      */
     public function getWeek($yearOrStart, $week = null)
     {
+        $factory = $this->getFactory();
+
         if (!$yearOrStart instanceof \DateTime) {
-            $yearOrStart = new \DateTime(sprintf('%s-W%s', $yearOrStart, str_pad($week, 2, '0', STR_PAD_LEFT)));
+            $yearOrStart = new \DateTime(sprintf('%s-W%s', $yearOrStart, str_pad($week, 2, 0, STR_PAD_LEFT)));
         }
 
-        return new Period\Week($yearOrStart, $this->firstWeekday);
+        return $factory->createWeek($factory->findFirstDayOfWeek($yearOrStart));
     }
 
     /**
@@ -100,7 +104,7 @@ class Calendar
      * @param null|int      $month
      * @param null|int      $day
      *
-     * @return Period\Day
+     * @return PeriodInterface
      */
     public function getDay($yearOrStart, $month = null, $day = null)
     {
@@ -108,7 +112,57 @@ class Calendar
             $yearOrStart = new \DateTime(sprintf('%s-%s-%s', $yearOrStart, $month, $day));
         }
 
-        return new Period\Day($yearOrStart, $this->firstWeekday);
+        return $this->getFactory()->createDay($yearOrStart);
+    }
+
+    /**
+     * @param \DateTime|int $yearOrStart
+     * @param null|int      $month
+     * @param null|int      $day
+     *
+     * @return PeriodInterface
+     */
+    public function getHour($yearOrStart, $month = null, $day = null, $hour = null)
+    {
+        if (!$yearOrStart instanceof \DateTime) {
+            $yearOrStart = new \DateTime(sprintf('%s-%s-%s %s:00', $yearOrStart, $month, $day, $hour));
+        }
+
+        return $this->getFactory()->createHour($yearOrStart);
+    }
+
+    /**
+     * @param \DateTime|int $yearOrStart
+     * @param null|int      $month
+     * @param null|int      $day
+     *
+     * @return PeriodInterface
+     */
+    public function getMinute($yearOrStart, $month = null, $day = null, $hour = null, $minute = null)
+    {
+        if (!$yearOrStart instanceof \DateTime) {
+            $yearOrStart = new \DateTime(sprintf('%s-%s-%s %s:%s', $yearOrStart, $month, $day, $hour, $minute));
+        }
+
+        return $this->getFactory()->createMinute($yearOrStart);
+    }
+
+    /**
+     * @param \DateTime|int $yearOrStart
+     * @param null|int      $month
+     * @param null|int      $day
+     *
+     * @return PeriodInterface
+     */
+    public function getSecond($yearOrStart, $month = null, $day = null, $hour = null, $minute = null, $second = null)
+    {
+        if (!$yearOrStart instanceof \DateTime) {
+            $yearOrStart = new \DateTime(
+                sprintf('%s-%s-%s %s:%s:%s', $yearOrStart, $month, $day, $hour, $minute, $second)
+            );
+        }
+
+        return $this->getFactory()->createSecond($yearOrStart);
     }
 
     /**
@@ -123,11 +177,31 @@ class Calendar
     }
 
     /**
+     * @param FactoryInterface $factory
+     */
+    public function setFactory(FactoryInterface $factory)
+    {
+        $this->factory = $factory;
+    }
+
+    /**
+     * @return FactoryInterface
+     */
+    public function getFactory()
+    {
+        if (null === $this->factory) {
+            $this->factory = new Factory();
+        }
+
+        return $this->factory;
+    }
+
+    /**
      * @param int $firstWeekday
      */
     public function setFirstWeekday($firstWeekday)
     {
-        $this->firstWeekday = $firstWeekday;
+        $this->getFactory()->setFirstWeekday($firstWeekday);
     }
 
     /**
@@ -135,6 +209,22 @@ class Calendar
      */
     public function getFirstWeekday()
     {
-        return $this->firstWeekday;
+        return $this->factory->getFirstWeekday();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStrictDates()
+    {
+        return $this->getFactory()->getStrictDates();
+    }
+
+    /**
+     * @param bool $strict
+     */
+    public function setStrictDates($strict)
+    {
+        $this->getFactory()->setStrictDates($strict);
     }
 }

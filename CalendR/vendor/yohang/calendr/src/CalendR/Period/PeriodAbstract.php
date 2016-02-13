@@ -14,83 +14,47 @@ namespace CalendR\Period;
 use CalendR\Event\EventInterface;
 
 /**
- * An abstract class that represent a date period and provide some base helpers
+ * An abstract class that represent a date period and provide some base helpers.
  *
  * @author Yohan Giarelli <yohan@giarel.li>
  */
 abstract class PeriodAbstract implements PeriodInterface
 {
-    // /**
-    //  * @var \DateTime
-    //  */
-    // protected $begin;
-    //
-    // /**
-    //  * @var \DateTime
-    //  */
-    // protected $end;
-    //
-    // /**
-    //  * @var int
-    //  */
-    // protected $firstWeekday;
-
-    /*==================================================
-        Add by SECT
-    ================================================== */
     /**
      * @var \DateTime
      */
-    public $begin;
+    protected $begin;
 
     /**
      * @var \DateTime
      */
-    public $end;
+    protected $end;
 
     /**
-     * @var int
+     * @var FactoryInterface
      */
-    public $firstWeekday;
-    /*==================================================
-        Add by SECT
-    ================================================== */
+    protected $factory;
 
     /**
-     * @param int $firstWeekday
+     * @param FactoryInterface|int $factory
      *
-     * @throws Exception\NotAWeekDay
+     * @throws Exception\NotAWeekday
+     * @throws Exception\InvalidArgument
      */
-    public function __construct($firstWeekday = Day::MONDAY)
+    public function __construct($factory = null)
     {
-        if ($firstWeekday < 0 || $firstWeekday > 6) {
-            throw new Exception\NotAWeekday(
-                sprintf(
-                    '"%s" is not a valid day. Days are between 0 (Sunday) and 6 (Friday)'
-                )
-            );
+        if (is_numeric($factory)) { // for backwards compatibility
+            $factory = new Factory(array('first_weekday' => $factory));
         }
-        $this->firstWeekday = $firstWeekday;
+        if (!(null === $factory || $factory instanceof FactoryInterface)) {
+            throw new Exception\InvalidArgument('Factory parameter must implement CalendR\Period\FactoryInterface');
+        }
+
+        $this->factory = $factory;
     }
 
     /**
-     * @return \DateTime
-     */
-    public function getBegin()
-    {
-        return $this->begin;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getEnd()
-    {
-        return $this->end;
-    }
-
-    /**
-     * Checks if the given period is contained in the current period
+     * Checks if the given period is contained in the current period.
      *
      * @param \DateTime $date
      *
@@ -102,7 +66,7 @@ abstract class PeriodAbstract implements PeriodInterface
     }
 
     /**
-     * Checks if a period is equals to an other
+     * Checks if a period is equals to an other.
      *
      * @param PeriodInterface $period
      *
@@ -118,7 +82,7 @@ abstract class PeriodAbstract implements PeriodInterface
 
     /**
      * Returns true if the period include the other period
-     * given as argument
+     * given as argument.
      *
      * @param PeriodInterface $period
      * @param bool            $strict
@@ -145,11 +109,11 @@ abstract class PeriodAbstract implements PeriodInterface
      *  * Event is during period
      *  * Period is during event
      *  * Event begin is during Period
-     *  * Event end is during Period
+     *  * Event end is during Period.
      *
      * @param EventInterface $event
      *
-     * @return boolean
+     * @return bool
      */
     public function containsEvent(EventInterface $event)
     {
@@ -162,7 +126,7 @@ abstract class PeriodAbstract implements PeriodInterface
     }
 
     /**
-     * Format the period to a string
+     * Format the period to a string.
      *
      * @param string $format
      *
@@ -174,27 +138,27 @@ abstract class PeriodAbstract implements PeriodInterface
     }
 
     /**
-     * Returns if the current period is the current one
+     * Returns if the current period is the current one.
      *
      * @return bool
      */
     public function isCurrent()
     {
-        return $this->contains(new \DateTime);
+        return $this->contains(new \DateTime());
     }
 
     /**
-     * Gets the next period of the same type
+     * Gets the next period of the same type.
      *
      * @return PeriodInterface
      */
     public function getNext()
     {
-        return new static($this->end, $this->firstWeekday);
+        return new static($this->end, $this->factory);
     }
 
     /**
-     * Gets the previous period of the same type
+     * Gets the previous period of the same type.
      *
      * @return PeriodInterface
      */
@@ -203,7 +167,35 @@ abstract class PeriodAbstract implements PeriodInterface
         $start = clone $this->begin;
         $start->sub(static::getDateInterval());
 
-        return new static($start, $this->firstWeekday);
+        return new static($start, $this->factory);
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getBegin()
+    {
+        return clone $this->begin;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnd()
+    {
+        return clone $this->end;
+    }
+
+    /**
+     * @return FactoryInterface
+     */
+    public function getFactory()
+    {
+        if (null === $this->factory) {
+            $this->factory = new Factory();
+        }
+
+        return $this->factory;
     }
 
     /**
@@ -211,7 +203,7 @@ abstract class PeriodAbstract implements PeriodInterface
      */
     public function setFirstWeekday($firstWeekday)
     {
-        $this->firstWeekday = $firstWeekday;
+        $this->getFactory()->setFirstWeekday($firstWeekday);
     }
 
     /**
@@ -219,6 +211,6 @@ abstract class PeriodAbstract implements PeriodInterface
      */
     public function getFirstWeekday()
     {
-        return $this->firstWeekday;
+        return $this->getFactory()->getFirstWeekday();
     }
 }

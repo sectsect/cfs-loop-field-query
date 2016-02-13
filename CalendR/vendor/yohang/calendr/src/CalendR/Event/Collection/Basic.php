@@ -23,14 +23,14 @@ use CalendR\Period\PeriodInterface;
 class Basic implements CollectionInterface
 {
     /**
-     * The events
+     * The events.
      *
-     * @var array<EventInterface>
+     * @var EventInterface[]
      */
     protected $events;
 
     /**
-     * @param array $events
+     * @param EventInterface[] $events
      */
     public function __construct(array $events = array())
     {
@@ -38,7 +38,7 @@ class Basic implements CollectionInterface
     }
 
     /**
-     * Adds an event to the collection
+     * Adds an event to the collection.
      *
      * @param EventInterface $event
      */
@@ -48,7 +48,7 @@ class Basic implements CollectionInterface
     }
 
     /**
-     * Removes an event from the collection
+     * Removes an event from the collection.
      *
      * @param EventInterface $event
      */
@@ -62,9 +62,9 @@ class Basic implements CollectionInterface
     }
 
     /**
-     * Return all events;
+     * Return all events;.
      *
-     * @return array<EventInterface>
+     * @return EventInterface[]
      */
     public function all()
     {
@@ -72,7 +72,7 @@ class Basic implements CollectionInterface
     }
 
     /**
-     * Returns if there is events corresponding to $index period
+     * Returns if there is events corresponding to $index period.
      *
      * @param mixed $index
      *
@@ -84,11 +84,11 @@ class Basic implements CollectionInterface
     }
 
     /**
-     * Find events in the collection
+     * Find events in the collection.
      *
      * @param mixed $index
      *
-     * @return array<EventInterface>
+     * @return EventInterface[]
      */
     public function find($index)
     {

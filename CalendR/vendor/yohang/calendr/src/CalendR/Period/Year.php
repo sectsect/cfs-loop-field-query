@@ -3,38 +3,41 @@
 namespace CalendR\Period;
 
 /**
- * Represents a year
+ * Represents a year.
  *
  * @author Yohan Giarelli <yohan@giarel.li>
  */
 class Year extends PeriodAbstract implements \Iterator
 {
     /**
-     * @var Month
+     * @var PeriodInterface
      */
     private $current;
 
     /**
-     * @param \DateTime $begin
-     * @param int       $firstWeekday
+     * @param \DateTime        $begin
+     * @param FactoryInterface $factory
      *
      * @throws Exception\NotAYear
      */
-    public function __construct(\DateTime $begin, $firstWeekday = Day::MONDAY)
+    public function __construct(\DateTime $begin, $factory = null)
     {
-        if (!self::isValid($begin)) {
-            throw new Exception\NotAYear;
+        parent::__construct($factory);
+        if ($this->getFactory()->getStrictDates() && !self::isValid($begin)) {
+            throw new Exception\NotAYear();
         }
 
+        // Not in strict mode, accept any timestamp and set the begin date back to the beginning of this period.
         $this->begin = clone $begin;
-        $this->end = clone $begin;
-        $this->end->add(new \DateInterval('P1Y'));
+        $this->begin->setDate($this->begin->format('Y'), 1, 1);
+        $this->begin->setTime(0, 0, 0);
 
-        parent::__construct($firstWeekday);
+        $this->end = clone $this->begin;
+        $this->end->add($this->getDateInterval());
     }
 
     /**
-     * Returns the period as a DatePeriod
+     * Returns the period as a DatePeriod.
      *
      * @return \DatePeriod
      */
@@ -50,11 +53,11 @@ class Year extends PeriodAbstract implements \Iterator
      */
     public static function isValid(\DateTime $start)
     {
-        return $start->format('d-m') == '01-01';
+        return $start->format('d-m H:i:s') === '01-01 00:00:00';
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -62,12 +65,12 @@ class Year extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function next()
     {
         if (null === $this->current) {
-            $this->current = new Month($this->begin, $this->firstWeekday);
+            $this->current = $this->getFactory()->createMonth($this->begin);
         } else {
             $this->current = $this->current->getNext();
             if (!$this->contains($this->current->getBegin())) {
@@ -77,7 +80,7 @@ class Year extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -85,7 +88,7 @@ class Year extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function valid()
     {
@@ -93,7 +96,7 @@ class Year extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {
@@ -102,7 +105,7 @@ class Year extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * Returns the year
+     * Returns the year.
      *
      * @return string
      */
@@ -112,7 +115,7 @@ class Year extends PeriodAbstract implements \Iterator
     }
 
     /**
-     * Returns a \DateInterval equivalent to the period
+     * Returns a \DateInterval equivalent to the period.
      *
      * @return \DateInterval
      */
