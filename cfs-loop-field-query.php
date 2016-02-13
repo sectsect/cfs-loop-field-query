@@ -405,6 +405,7 @@ function cfs_lfq_calendar($eventdata, $months)
     $locale      = new WP_Locale();
     $wd          = array_values($locale->weekday_abbrev);
     $wd_en       = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
+    $today = date_i18n('Ymd');
     $factory     = new CalendR\Calendar();
     foreach ($months as $month):
         $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
@@ -430,7 +431,7 @@ function cfs_lfq_calendar($eventdata, $months)
                 <?php foreach ($month as $week): ?>
                     <tr>
                         <?php foreach ($week as $day): ?>
-                            <td class="<?php echo mb_strtolower($day->format('D')); ?><?php if (!$month->includes($day)): ?> out-of-month<?php endif; ?>">
+                            <td class="<?php echo mb_strtolower($day->format('D')); ?><?php if($day->format('Ymd') === $today): ?> today<?php endif ?><?php if (!$month->includes($day)): ?> out-of-month<?php endif; ?>">
                                 <?php
                                     if ($month->includes($day) && in_array($day->format('Ymd'), $eventdata)) {
                                         $href = get_post_type_date_link(CFS_LFQ_POST_TYPE, $day->format('Y'), $day->format('m'), $day->format('d'));
