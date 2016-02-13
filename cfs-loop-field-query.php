@@ -401,10 +401,11 @@ require_once plugin_dir_path(__FILE__).'CalendR/vendor/autoload.php';
 function cfs_lfq_calendar($eventdata, $months)
 {
     if (CFS_LFQ_POST_TYPE):
-    $weekdayBase = 1;  // 0:sunday ～ 6:saturday
-    $locale = new WP_Locale();
-    $wd = array_values($locale->weekday_abbrev);
-    $factory = new CalendR\Calendar();
+    $weekdayBase = 1; // 0:sunday ～ 6:saturday
+    $locale      = new WP_Locale();
+    $wd          = array_values($locale->weekday_abbrev);
+    $wd_en       = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
+    $factory     = new CalendR\Calendar();
     foreach ($months as $month):
         $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
     ?>
@@ -417,9 +418,10 @@ function cfs_lfq_calendar($eventdata, $months)
         		<tr>
         			<?php
                         for ($i = 0; $i < 7; ++$i) {
-                            $weekday = ($weekdayBase + $i) % 7;
+                            $weekday     = ($weekdayBase + $i) % 7;
                             $weekdayText = $wd[$weekday];
-                            echo '<th class="'.'dayweek'.'">', $weekdayText, '</th>';
+                            $weekdayEn   = $wd_en[$weekday];
+                            echo '<th class="dayweek ' . $weekdayEn . '">'. $weekdayText. '</th>';
                         }
                     ?>
         		</tr>
@@ -432,7 +434,7 @@ function cfs_lfq_calendar($eventdata, $months)
                                 <?php
                                     if ($month->includes($day) && in_array($day->format('Ymd'), $eventdata)) {
                                         $href = get_post_type_date_link(CFS_LFQ_POST_TYPE, $day->format('Y'), $day->format('m'), $day->format('d'));
-                                        $dayText = '<a href="'.$href.'"><span>'.$day->format('j').'</span></a>';
+                                        $dayText = '<a href="' . $href . '"><span>' . $day->format('j') . '</span></a>';
                                     } else {
                                         $dayText = $day->format('j');
                                     }
