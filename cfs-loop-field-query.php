@@ -4,8 +4,8 @@ Plugin Name: CFS Loop-Field Query for Events
 Plugin URI: https://github.com/sectsect/cfs-loop-field-query
 Description: Modify the Query to multiple dates in a post For Custom Field Suite "Loop Field".
 Author: SECT INTERACTIVE AGENCY
-Version: 1.2.3
-Author URI: http://www.ilovesect.com/
+Version: 1.2.4
+Author URI: https://www.ilovesect.com/
 */
 
 global $wpdb;
