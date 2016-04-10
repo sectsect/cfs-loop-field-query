@@ -7,6 +7,7 @@
 * PHP 5.3+
 * Activation [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) Plugin.
 * Create a Loop Field and Date Field in the Loop Field using [CFS](https://wordpress.org/plugins/custom-field-suite/) Plugin.
+* A 6-pack of beer🍺 (optional, I guess.)
 
 #### Installation
 - - -
