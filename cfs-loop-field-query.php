@@ -333,6 +333,73 @@ function cfs_lfq_options_page()
 }
 
 /*==================================================
+	Add date column on Admin Page
+================================================== */
+	function cfs_lfq_manage_posts_columns($columns) {
+        $columns['eventdate'] = "Event Day<span style ='font-size: 11px; color: #999; margin-left: 12px;'>Today: " . date_i18n('Y-m-d') . "</span>";
+        if(CFS_LFQ_CFS_LOOP_STARTTIME || CFS_LFQ_CFS_LOOP_FINISHTIME){
+            $columns['eventtime'] = "Time";
+        }
+		return $columns;
+	}
+	function cfs_lfq_add_column($column_name, $postID) {
+        if($column_name == "eventdate"){
+            $fields = CFS()->get(CFS_LFQ_CFS_LOOP, $postID);
+            sort($fields);
+            echo '<ul style="padding: 0; margin: 0;">';
+            foreach($fields as $field){
+				$today = date_i18n("Ymd");
+				$thedate = date('Ymd', strtotime($field['date']));
+				if($thedate < $today){
+					$finish = ' class="finish"';
+				}elseif($thedate == $today){
+					$finish = ' class="theday"';
+				}else{
+					$finish = '';
+				}
+                $wd = date('D', strtotime($field['date']));
+                if($wd === "Sat"){
+                    $wd = '<span style="color: #2ea2cc;">' . $wd . '</span>';
+                }elseif($wd === "Sun"){
+                    $wd = '<span style="color: #a00;">' . $wd . '</span>';
+                }else{
+                    $wd = "<span>" . $wd . "</span>";
+                }
+                echo "<li".$finish.">" . date('Y-m-d', strtotime($field['date'])) . "（" . $wd . "）" . "</li>";
+            }
+            echo '</ul>';
+        }else if($column_name == "eventtime"){
+            $fields = CFS()->get(CFS_LFQ_CFS_LOOP, $postID);
+            sort($fields);
+            echo '<ul style="padding: 0; margin: 0;">';
+            foreach($fields as $field){
+                $today = date_i18n("Ymd");
+				$thedate = date('Ymd', strtotime($field['date']));
+				if($thedate < $today){
+					$finish = ' class="finish"';
+				}elseif($thedate == $today){
+					$finish = ' class="theday"';
+				}else{
+					$finish = '';
+				}
+				echo "<li".$finish.">" . date('H:i', strtotime($field['starttime'])) . " - " . date('H:i', strtotime($field['finishtime'])) . "</li>";
+            }
+            echo '</ul>';
+        }
+	}
+	add_filter( 'manage_posts_columns', 'cfs_lfq_manage_posts_columns' );
+	add_action( 'manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2 );
+
+/*==================================================
+    Add CSS to edit.php
+================================================== */
+global $pagenow;
+if ($_GET['post_type'] == CFS_LFQ_POST_TYPE && is_admin() && $pagenow=='edit.php')  {
+    wp_enqueue_style('admin-edit', plugin_dir_url( __FILE__ ) . 'admin/css/admin-edit.css', array());
+}
+
+
+/*==================================================
     Native code Example
 ================================================== */
 // $ary          = array();
@@ -399,6 +466,7 @@ function get_post_type_date_link($post_type, $year, $month = 0, $day = 0)
 
     return home_url("$post_type_slug");
 }
+
 
 /*==================================================
     Load CalendR Class

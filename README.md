@@ -20,6 +20,10 @@
  ( Optional Field: "Taxonomy Name", "StartTime Field", "FinishTime Field" )  
  That's it:ok_hand: The main query of your select post types will be rewritten.
 
+#### Fields Structure Example
+- - -
+ <img src="images/screenshot.png" width="789" height="245">
+
 #### TIP
 - - -
 * If you want to apply to some existing article, resave the article.  
@@ -119,6 +123,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
     </time>
 ### Change log  
+ * **2.0.0** - **Add**: Add Date & Time column on Edit page.
  * **1.2.6** - **Add**: Add [Select2](https://github.com/select2/select2) for `<select>` boxes on Settings page.
  * **1.2.5** - **Update**: [CalendR](https://github.com/yohang/CalendR) PHP Class to 1.1.
  * **1.2.4** - **Add**: Add "today" class to current day for calendar.
