@@ -483,11 +483,11 @@ require_once plugin_dir_path(__FILE__) . 'CalendR/vendor/autoload.php';
 function cfs_lfq_calendar($eventdata, $months)
 {
     if (CFS_LFQ_POST_TYPE):
-    $weekdayBase = 1; // 0:sunday ～ 6:saturday
+    $weekdayBase = 1;                   // 0:sunday ～ 6:saturday
     $locale      = new WP_Locale();
     $wd          = array_values($locale->weekday_abbrev);
     $wd_en       = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
-    $today = date_i18n('Ymd');
+    $today       = date_i18n('Ymd');
     $factory     = new CalendR\Calendar();
     foreach ($months as $month):
         $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
