@@ -333,7 +333,7 @@ function cfs_lfq_options_page()
 }
 
 /*==================================================
-	Add date column on Admin Page
+	Add date column to only list-page for a Specific Post Type
 ================================================== */
 	function cfs_lfq_manage_posts_columns($columns) {
         $columns['eventdate'] = "Event Day<span style ='font-size: 11px; color: #999; margin-left: 12px;'>Today: " . date_i18n('Y-m-d') . "</span>";
@@ -387,8 +387,13 @@ function cfs_lfq_options_page()
             echo '</ul>';
         }
 	}
-	add_filter( 'manage_posts_columns', 'cfs_lfq_manage_posts_columns' );
-	add_action( 'manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2 );
+    if(is_admin()){
+        global $pagenow;
+        if ($_GET['post_type'] == CFS_LFQ_POST_TYPE && is_admin() && $pagenow == 'edit.php')  {
+            add_filter( 'manage_posts_columns', 'cfs_lfq_manage_posts_columns' );
+	        add_action( 'manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2 );
+        }
+    }
 
 /*==================================================
     Add CSS to edit.php
