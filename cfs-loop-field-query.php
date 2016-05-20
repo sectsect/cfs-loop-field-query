@@ -391,7 +391,6 @@ function cfs_lfq_options_page()
             }
             echo '</ul>';
         }
-<<<<<<< HEAD
 	}
     if(is_admin()){
         global $pagenow;
@@ -400,11 +399,6 @@ function cfs_lfq_options_page()
 	        add_action( 'manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2 );
         }
     }
-=======
-    }
-    add_filter('manage_posts_columns', 'cfs_lfq_manage_posts_columns');
-    add_action('manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2);
->>>>>>> origin/master
 
 /*==================================================
     Add CSS to edit.php
@@ -524,9 +518,7 @@ function cfs_lfq_calendar($eventdata, $months)
                 <?php foreach ($month as $week): ?>
                     <tr>
                         <?php foreach ($week as $day): ?>
-                            <td class="<?php echo mb_strtolower($day->format('D'));
-    ?><?php if ($day->format('Ymd') === $today): ?> today<?php endif ?><?php if (!$month->includes($day)): ?> out-of-month<?php endif;
-    ?>">
+                            <td class="<?php echo mb_strtolower($day->format('D')); ?><?php if ($day->format('Ymd') === $today): ?> today<?php endif ?><?php if (!$month->includes($day)): ?> out-of-month<?php endif; ?>">
                                 <?php
                                     if ($month->includes($day) && in_array($day->format('Ymd'), $eventdata)) {
                                         $href = get_post_type_date_link(CFS_LFQ_POST_TYPE, $day->format('Y'), $day->format('m'), $day->format('d'));
