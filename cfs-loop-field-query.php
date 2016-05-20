@@ -46,13 +46,14 @@ function cfs_lfq_activate()
     Save to "wp_cfs_loop_field_query" table.
 ================================================== */
 // Sorting by the value of the second dimension in the array of two-dimensional array.
-function sortArrayByKey( &$array, $sortKey, $sortType = SORT_ASC ) {
+function sortArrayByKey(&$array, $sortKey, $sortType = SORT_ASC)
+{
     $tmpArray = array();
-    foreach ( $array as $key => $row ) {
+    foreach ($array as $key => $row) {
         $tmpArray[$key] = $row[$sortKey];
     }
-    array_multisort( $tmpArray, $sortType, $array );
-    unset( $tmpArray );
+    array_multisort($tmpArray, $sortType, $array);
+    unset($tmpArray);
 }
 
 function save_event($params)
@@ -61,7 +62,7 @@ function save_event($params)
         global $wpdb;
         $postID = $params['post_data']['ID'];
         $fields = CFS()->get(CFS_LFQ_CFS_LOOP, $postID);
-        sortArrayByKey( $fields, CFS_LFQ_CFS_LOOP_DATE );  // sorting by "date"
+        sortArrayByKey($fields, CFS_LFQ_CFS_LOOP_DATE);  // sorting by "date"
 
         $sql = 'DELETE FROM '.TABLE_NAME." WHERE post_id = $postID;";
         $sql = $wpdb->prepare($sql);
@@ -311,12 +312,14 @@ function cfs_lfq_menu()
     add_action('admin_print_scripts-' . $page_hook_suffix, 'cfs_lfq_admin_scripts');    // @ https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/wp_enqueue_script#.E3.83.97.E3.83.A9.E3.82.B0.E3.82.A4.E3.83.B3.E7.AE.A1.E7.90.86.E7.94.BB.E9.9D.A2.E3.81.AE.E3.81.BF.E3.81.A7.E3.82.B9.E3.82.AF.E3.83.AA.E3.83.97.E3.83.88.E3.82.92.E3.83.AA.E3.83.B3.E3.82.AF.E3.81.99.E3.82.8B
     add_action('admin_init', 'register_cfs_lfq_settings');
 }
-function cfs_lfq_admin_styles() {
+function cfs_lfq_admin_styles()
+{
     wp_enqueue_style('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css', array());
 }
-function cfs_lfq_admin_scripts() {
+function cfs_lfq_admin_scripts()
+{
     wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js', array('jquery'));
-    wp_enqueue_script('script', plugin_dir_url( __FILE__ ) . 'admin/js/script.js', array('select2'));
+    wp_enqueue_script('script', plugin_dir_url(__FILE__) . 'admin/js/script.js', array('select2'));
 }
 function register_cfs_lfq_settings()
 {
@@ -335,57 +338,60 @@ function cfs_lfq_options_page()
 /*==================================================
 	Add date column to only list-page for a Specific Post Type
 ================================================== */
-	function cfs_lfq_manage_posts_columns($columns) {
+    function cfs_lfq_manage_posts_columns($columns)
+    {
         $columns['eventdate'] = "Event Day<span style ='font-size: 11px; color: #999; margin-left: 12px;'>Today: " . date_i18n('Y-m-d') . "</span>";
-        if(CFS_LFQ_CFS_LOOP_STARTTIME || CFS_LFQ_CFS_LOOP_FINISHTIME){
+        if (CFS_LFQ_CFS_LOOP_STARTTIME || CFS_LFQ_CFS_LOOP_FINISHTIME) {
             $columns['eventtime'] = "Time";
         }
-		return $columns;
-	}
-	function cfs_lfq_add_column($column_name, $postID) {
-        if($column_name == "eventdate"){
+        return $columns;
+    }
+    function cfs_lfq_add_column($column_name, $postID)
+    {
+        if ($column_name == "eventdate") {
             $fields = CFS()->get(CFS_LFQ_CFS_LOOP, $postID);
             sort($fields);
             echo '<ul style="padding: 0; margin: 0;">';
-            foreach($fields as $field){
-				$today = date_i18n("Ymd");
-				$thedate = date('Ymd', strtotime($field['date']));
-				if($thedate < $today){
-					$finish = ' class="finish"';
-				}elseif($thedate == $today){
-					$finish = ' class="theday"';
-				}else{
-					$finish = '';
-				}
+            foreach ($fields as $field) {
+                $today = date_i18n("Ymd");
+                $thedate = date('Ymd', strtotime($field['date']));
+                if ($thedate < $today) {
+                    $finish = ' class="finish"';
+                } elseif ($thedate == $today) {
+                    $finish = ' class="theday"';
+                } else {
+                    $finish = '';
+                }
                 $wd = date('D', strtotime($field['date']));
-                if($wd === "Sat"){
+                if ($wd === "Sat") {
                     $wd = '<span style="color: #2ea2cc;">' . $wd . '</span>';
-                }elseif($wd === "Sun"){
+                } elseif ($wd === "Sun") {
                     $wd = '<span style="color: #a00;">' . $wd . '</span>';
-                }else{
+                } else {
                     $wd = "<span>" . $wd . "</span>";
                 }
                 echo "<li".$finish.">" . date('Y-m-d', strtotime($field['date'])) . "（" . $wd . "）" . "</li>";
             }
             echo '</ul>';
-        }else if($column_name == "eventtime"){
+        } elseif ($column_name == "eventtime") {
             $fields = CFS()->get(CFS_LFQ_CFS_LOOP, $postID);
             sort($fields);
             echo '<ul style="padding: 0; margin: 0;">';
-            foreach($fields as $field){
+            foreach ($fields as $field) {
                 $today = date_i18n("Ymd");
-				$thedate = date('Ymd', strtotime($field['date']));
-				if($thedate < $today){
-					$finish = ' class="finish"';
-				}elseif($thedate == $today){
-					$finish = ' class="theday"';
-				}else{
-					$finish = '';
-				}
-				echo "<li".$finish.">" . date('H:i', strtotime($field['starttime'])) . " - " . date('H:i', strtotime($field['finishtime'])) . "</li>";
+                $thedate = date('Ymd', strtotime($field['date']));
+                if ($thedate < $today) {
+                    $finish = ' class="finish"';
+                } elseif ($thedate == $today) {
+                    $finish = ' class="theday"';
+                } else {
+                    $finish = '';
+                }
+                echo "<li".$finish.">" . date('H:i', strtotime($field['starttime'])) . " - " . date('H:i', strtotime($field['finishtime'])) . "</li>";
             }
             echo '</ul>';
         }
+<<<<<<< HEAD
 	}
     if(is_admin()){
         global $pagenow;
@@ -394,15 +400,21 @@ function cfs_lfq_options_page()
 	        add_action( 'manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2 );
         }
     }
+=======
+    }
+    add_filter('manage_posts_columns', 'cfs_lfq_manage_posts_columns');
+    add_action('manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2);
+>>>>>>> origin/master
 
 /*==================================================
     Add CSS to edit.php
 ================================================== */
-global $pagenow;
-if ($_GET['post_type'] == CFS_LFQ_POST_TYPE && is_admin() && $pagenow=='edit.php')  {
-    wp_enqueue_style('admin-edit', plugin_dir_url( __FILE__ ) . 'admin/css/admin-edit.css', array());
+if (is_admin()) {
+    global $pagenow;
+    if ($_GET['post_type'] == CFS_LFQ_POST_TYPE && is_admin() && $pagenow=='edit.php') {
+        wp_enqueue_style('admin-edit', plugin_dir_url(__FILE__) . 'admin/css/admin-edit.css', array());
+    }
 }
-
 
 /*==================================================
     Native code Example
@@ -472,22 +484,21 @@ function get_post_type_date_link($post_type, $year, $month = 0, $day = 0)
     return home_url("$post_type_slug");
 }
 
-
 /*==================================================
     Load CalendR Class
 ================================================== */
-require_once plugin_dir_path(__FILE__).'CalendR/vendor/autoload.php';
+require_once plugin_dir_path(__FILE__) . 'CalendR/vendor/autoload.php';
 /*==================================================
     Event Calendar (archive)
 ================================================== */
 function cfs_lfq_calendar($eventdata, $months)
 {
     if (CFS_LFQ_POST_TYPE):
-    $weekdayBase = 1; // 0:sunday ～ 6:saturday
+    $weekdayBase = 1;                   // 0:sunday ～ 6:saturday
     $locale      = new WP_Locale();
     $wd          = array_values($locale->weekday_abbrev);
     $wd_en       = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
-    $today = date_i18n('Ymd');
+    $today       = date_i18n('Ymd');
     $factory     = new CalendR\Calendar();
     foreach ($months as $month):
         $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
@@ -513,7 +524,9 @@ function cfs_lfq_calendar($eventdata, $months)
                 <?php foreach ($month as $week): ?>
                     <tr>
                         <?php foreach ($week as $day): ?>
-                            <td class="<?php echo mb_strtolower($day->format('D')); ?><?php if($day->format('Ymd') === $today): ?> today<?php endif ?><?php if (!$month->includes($day)): ?> out-of-month<?php endif; ?>">
+                            <td class="<?php echo mb_strtolower($day->format('D'));
+    ?><?php if ($day->format('Ymd') === $today): ?> today<?php endif ?><?php if (!$month->includes($day)): ?> out-of-month<?php endif;
+    ?>">
                                 <?php
                                     if ($month->includes($day) && in_array($day->format('Ymd'), $eventdata)) {
                                         $href = get_post_type_date_link(CFS_LFQ_POST_TYPE, $day->format('Y'), $day->format('m'), $day->format('d'));
