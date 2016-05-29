@@ -487,31 +487,31 @@ require_once plugin_dir_path(__FILE__) . 'CalendR/vendor/autoload.php';
 function cfs_lfq_calendar($eventdata, $months)
 {
     if (CFS_LFQ_POST_TYPE):
-    $weekdayBase = 1;                   // 0:sunday ～ 6:saturday
-    $locale      = new WP_Locale();
-    $wd          = array_values($locale->weekday_abbrev);
-    $wd_en       = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
-    $today       = date_i18n('Ymd');
-    $factory     = new CalendR\Calendar();
-    foreach ($months as $month):
-        $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
-    ?>
-    <div>
+	    $weekdayBase = 1;                   // 0:sunday ～ 6:saturday
+	    $locale      = new WP_Locale();
+	    $wd          = array_values($locale->weekday_abbrev);
+	    $wd_en       = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
+	    $today       = date_i18n('Ymd');
+	    $factory     = new CalendR\Calendar();
+	    foreach ($months as $month):
+	        $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
+?>
+    <section class="calendar">
         <header>
         	<h4><?php echo $month->format('M'); ?></h4>
         </header>
         <table cellspacing="0" cellpadding="0" border="0">
             <thead>
-        		<tr>
-        			<?php
+				<tr>
+					<?php
                         for ($i = 0; $i < 7; ++$i) {
                             $weekday     = ($weekdayBase + $i) % 7;
                             $weekdayText = $wd[$weekday];
                             $weekdayEn   = $wd_en[$weekday];
                             echo '<th class="dayweek ' . $weekdayEn . '">'. $weekdayText. '</th>';
                         }
-                    ?>
-        		</tr>
+					?>
+				</tr>
         	</thead>
         	<tbody>
                 <?php foreach ($month as $week): ?>
@@ -533,10 +533,9 @@ function cfs_lfq_calendar($eventdata, $months)
                 <?php endforeach ?>
             </tbody>
         </table>
-    </div>
+    </section>
 <?php
-    endforeach;
+    	endforeach;
     endif;
 }
-
 ?>
