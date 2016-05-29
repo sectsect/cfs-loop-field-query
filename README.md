@@ -117,7 +117,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
     </time>
 ### Change log  
- * **2.0.2** - **Modify**: Modify a html tag & Add class to html container element for `cfs_lfq_calendar()` generat calendar.
+ * **2.0.2** - **Modify**: Modify a html tag & Add class to html container element for `cfs_lfq_calendar()` generate calendar.
  * **2.0.0** - **Add**: Add Date & Time column on Edit page.
  * **1.2.6** - **Add**: Add [Select2](https://github.com/select2/select2) for `<select>` boxes on Settings page.
  * **1.2.5** - **Update**: [CalendR](https://github.com/yohang/CalendR) PHP Class to 1.1.
