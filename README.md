@@ -36,86 +36,93 @@
 You can get a sub query using the `new CFS_LFQ_Query()`
 
 #### Example: Sub Query
-    <?php
-        $ary	 = array();
-        $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
-        $perpage = 10;
-        $offset  = ($page - 1) * $perpage;
-        $args    = array(
-            'posts_per_page' => $perpage
-        );
-        $query = new CFS_LFQ_Query($args);
-    ?>
-    <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
-        // something
-    <?php endwhile; ?>
-    <?php endif;?>
-    <?php wp_reset_postdata(); ?>
-
+``` php
+<?php
+    $ary	 = array();
+    $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    $perpage = 10;
+    $offset  = ($page - 1) * $perpage;
+    $args    = array(
+        'posts_per_page' => $perpage
+    );
+    $query = new CFS_LFQ_Query($args);
+?>
+<?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
+    // something
+<?php endwhile; ?>
+<?php endif;?>
+<?php wp_reset_postdata(); ?>
+```
 #### Example: Sub Query For Calendar  
-    <?php
-        $dates   = array();
-        $args    = array(
-            'posts_per_page' => -1,
-            'calendar'       => true, // For get the data from not today but first day in this month.
-        );
-        $query = new CFS_LFQ_Query($args);
-    ?>
-    <?php if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post(); ?>
-    <?php
-        $date = date('Ymd', strtotime($post->date));
-        array_push($dates, $date);
-    ?>
-    <?php endwhile; endif; ?>
-    <?php wp_reset_postdata(); ?>
+``` php
+<?php
+    $dates   = array();
+    $args    = array(
+        'posts_per_page' => -1,
+        'calendar'       => true, // For get the data from not today but first day in this month.
+    );
+    $query = new CFS_LFQ_Query($args);
+?>
+<?php if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post(); ?>
+<?php
+    $date = date('Ymd', strtotime($post->date));
+    array_push($dates, $date);
+?>
+<?php endwhile; endif; ?>
+<?php wp_reset_postdata(); ?>
 
-    <?php
-        // Passing array to cfs_lfq Calendar Class.
-        $dates  = array_unique($dates); // Remove some Duplicate Values(Day)
-        $date   = new DateTime();
-        $months = array();
-        for ($i = 0; $i < 3; ++$i) {
-            if ($i > 0) {
-                $date->modify('first day of +1 month');
-            } else {
-                $date->modify('first day of this month');
-            }
-            array_push($months, $date->format('Ymd'));
+<?php
+    // Passing array to cfs_lfq Calendar Class.
+    $dates  = array_unique($dates); // Remove some Duplicate Values(Day)
+    $date   = new DateTime();
+    $months = array();
+    for ($i = 0; $i < 3; ++$i) {
+        if ($i > 0) {
+            $date->modify('first day of +1 month');
+        } else {
+            $date->modify('first day of this month');
         }
-        cfs_lfq_calendar($dates, $months);  // 3 months Calendar
-    ?>
+        array_push($months, $date->format('Ymd'));
+    }
+    cfs_lfq_calendar($dates, $months);  // 3 months Calendar
+?>
+```
 #### Example: Sub Query For Calendar (Your Calendar Class)
-    <?php
-        $ary	 = array();
-        $args    = array(
-            'posts_per_page'    => -1,
-            'calendar'          => true		// For get the data from not today but first day in this month.
-        );
-        $query = new CFS_LFQ_Query($args);
-    ?>
-    <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
-    <?php
-        $date       = date('Ymd', strtotime($post->date));
-        $post_id    = $post->ID;
-        $perm       = get_the_permalink();
-        $title      = get_the_title();
-        array_push($ary, array('date' => $date, 'id' => $post_id, 'permlink' => $perm, 'title' => $title));
-    ?>
-    <?php endwhile; endif; ?>
-    <?php wp_reset_postdata(); ?>
+``` php
+<?php
+    $ary	 = array();
+    $args    = array(
+        'posts_per_page'    => -1,
+        'calendar'          => true		// For get the data from not today but first day in this month.
+    );
+    $query = new CFS_LFQ_Query($args);
+?>
+<?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
+<?php
+    $date       = date('Ymd', strtotime($post->date));
+    $post_id    = $post->ID;
+    $perm       = get_the_permalink();
+    $title      = get_the_title();
+    array_push($ary, array('date' => $date, 'id' => $post_id, 'permlink' => $perm, 'title' => $title));
+?>
+<?php endwhile; endif; ?>
+<?php wp_reset_postdata(); ?>
 
-    <?php
-        // Passing array to your Calendar Class.
-        require_once 'Calendar/Month/Weeks.php';
-        calendar($ary, 0);
-    ?>
+<?php
+    // Passing array to your Calendar Class.
+    require_once 'Calendar/Month/Weeks.php';
+    calendar($ary, 0);
+?>
+```
 #### Example: Get the "Date", "StartTime" and "FinishTime"
-    <div id="date">
-        <?php echo date('Y-m-d', strtotime($post->date)); ?>
-    </div>
-    <time>
-        <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
-    </time>
+``` php
+<div id="date">
+    <?php echo date('Y-m-d', strtotime($post->date)); ?>
+</div>
+<time>
+    <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
+</time>
+```
 ### Change log  
  * **2.0.2** - **Modify**: Modify a html tag & Add class to html container element for `cfs_lfq_calendar()` generate calendar.
  * **2.0.0** - **Add**: Add Date & Time column on Edit page.
