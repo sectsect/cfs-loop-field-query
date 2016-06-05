@@ -136,3 +136,6 @@ You can get a sub query using the `new CFS_LFQ_Query()`
  * **1.1.1** - **Change**: If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: the day full)
  * **1.1.0** - **Support**: Add support "StartTime" and "FinishTime" for each Date in Loop Field.
  * **1.0.0** - Initial Release
+
+### License
+See [LICENSE](https://github.com/sectsect/cfs-loop-field-query/blob/master/LICENSE) file.
