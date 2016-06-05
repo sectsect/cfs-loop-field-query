@@ -265,7 +265,7 @@ function event_limits($limit)
 function event_groupby($groupby)
 {
     global $wpdb;
-    if (is_post_type_archive(CFS_LFQ_POST_TYPE)) {        //  is_post_type_archive の場合、重複投稿を出力させないため、groupbyでくくる
+    if (is_post_type_archive(CFS_LFQ_POST_TYPE)) {    // In the case of "is_post_type_archive()", it is summarized in groupby in order not to output a duplicate post.
         $groupby = "{$wpdb->posts}.ID";
     }
 
