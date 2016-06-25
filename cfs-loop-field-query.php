@@ -394,7 +394,7 @@ function cfs_lfq_options_page()
 	}
     if(is_admin()){
         global $pagenow;
-        if ($_GET['post_type'] == CFS_LFQ_POST_TYPE && is_admin() && $pagenow == 'edit.php')  {
+        if (isset($_GET['post_type']) && $_GET['post_type'] == CFS_LFQ_POST_TYPE && is_admin() && $pagenow == 'edit.php')  {
             add_filter( 'manage_posts_columns', 'cfs_lfq_manage_posts_columns' );
 	        add_action( 'manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2 );
         }
@@ -405,7 +405,7 @@ function cfs_lfq_options_page()
 ================================================== */
 if (is_admin()) {
     global $pagenow;
-    if ($_GET['post_type'] == CFS_LFQ_POST_TYPE && is_admin() && $pagenow == 'edit.php') {
+    if (isset($_GET['post_type']) && $_GET['post_type'] == CFS_LFQ_POST_TYPE && is_admin() && $pagenow == 'edit.php') {
         wp_enqueue_style('admin-edit', plugin_dir_url(__FILE__) . 'admin/css/admin-edit.css', array());
     }
 }
