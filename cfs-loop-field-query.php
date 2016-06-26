@@ -495,14 +495,10 @@ function cfs_lfq_calendar($args)
 			'element'      => 'div',
 			'class'        => ''
 		);
-		$d            = wp_parse_args( $args, $defaults );
-		$dates        = $d['dates'];
-		$months       = $d['months'];
-		$weekdayLabel = $d['weekdayLabel'];
-		$weekdayBase  = $d['weekdayBase'];
-		$element      = $d['element'];
-		$class        = $d['class'];
-	    $locale       = new WP_Locale();
+		$d = wp_parse_args( $args, $defaults );
+		extract( $d, EXTR_SKIP );
+		
+	    $locale = new WP_Locale();
 		if($weekdayLabel == 'en'){
 			$wd = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
 		}else{
