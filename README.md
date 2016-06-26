@@ -85,8 +85,8 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         array_push($months, $date->format('Ymd'));
     }
 	$args = array(
-		'dates'        => $dates,		// (array) (required)
-		'months'       => $months,		// (array) (required)
+		'dates'        => $dates,		// (array) (required) Array of event Date ('Ymd' format)
+		'months'       => $months,		// (array) (required) Array of month to generate calendar ('Ymd' format)
 		'weekdayLabel' => 'default',	// (string) (optional) Available value: 'default' or 'en' Note: 'default' is based on your wordpress locale setting.
 		'weekdayBase'  => 0,			// (integer) (optional) The start weekday. 0:sunday ～ 6:saturday Default: 0
 		'element'      => 'div',		// (string) (optional) The element for wraping. Default: 'div'
@@ -131,6 +131,52 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
 </time>
 ```
+
+### function
+- - -
+#### cfs_lfq_calendar($args)  
+##### Parameters
+
+* **dates**
+(array) (required) Array of event Date ('Ymd' format).
+
+* **months**
+(array) (required) Array of month to generate calendar ('Ymd' format)
+
+* **weekdayLabel**
+(string) (optional) Available value: `'default'` or `'en'`.  
+Default: `'default'`  
+:memo: `'default'` is based on your wordpress locale setting.
+
+* **weekdayBase**
+(integer) (optional) The start weekday. 0:sunday ～ 6:saturday  
+Default: `0`
+
+* **element**
+(string) (optional) The element for wraping.  
+Default: `'div'`
+
+* **class**
+(string) (optional) The 'class' attribute value for wrap element.  
+Default: `''`
+
+##### Example
+
+```php
+<?php
+$args = array(
+	'dates'        => $dates,
+	'months'       => $months,
+	'weekdayLabel' => 'default',
+	'weekdayBase'  => 0,
+	'element'      => 'div',
+	'class'        => 'myclass'
+);
+cfs_lfq_calendar($args);
+?>
+```
+
+
 ### Change log  
  * **2.0.3** - **Add**: Add options to function `cfs_lfq_calendar()`.
  * **2.0.2** - **Modify**: Modify a html tag & Add class to html container element for `cfs_lfq_calendar()` generate calendar.
