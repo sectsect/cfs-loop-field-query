@@ -88,7 +88,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 		'dates'        => $dates,		// (array) (required)
 		'months'       => $months,		// (array) (required)
 		'weekdayLabel' => 'default',	// (string) (optional) Available value: 'default' or 'en' Note: 'default' is based on your wordpress locale setting.
-		'weekdayBase'  => 0,			// 0:sunday ～ 6:saturday	(integer) (optional) The start weekday. Default: 0
+		'weekdayBase'  => 0,			// (integer) (optional) The start weekday. 0:sunday ～ 6:saturday Default: 0
 		'element'      => 'div',		// (string) (optional) The element for wraping. Default: 'div'
 		'class'        => ''			// (string) (optional) The 'class' attribute value for wrap element. Default: ''
 	);
