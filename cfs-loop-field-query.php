@@ -505,10 +505,11 @@ function cfs_lfq_calendar($args)
 	    $wd_en       = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
 	    $today       = date_i18n('Ymd');
 	    $factory     = new CalendR\Calendar();
+		$num = 1;
 	    foreach ($months as $month):
 	        $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
 ?>
-	<<?php echo esc_html($element); ?><?php if($class){echo ' class="' . esc_html($class) . '"';} ?>>
+	<<?php echo esc_html($element); ?> class="calendar-<?php echo $num; ?> calendar-<?php echo date('Y', strtotime($month)) . "-" . date('m', strtotime($month)) ?><?php if($class): ?> <?php echo esc_html($class); ?><?php endif; ?>">
         <header>
         	<h4><?php echo $month->format('M'); ?></h4>
         </header>
@@ -547,6 +548,7 @@ function cfs_lfq_calendar($args)
         </table>
 	</<?php echo esc_html($element); ?>>
 <?php
+			$num++;
     	endforeach;
     endif;
 }
