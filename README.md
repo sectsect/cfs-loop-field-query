@@ -131,6 +131,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 </time>
 ```
 ### Change log  
+ * **2.0.3** - **Add**: Add options to function `cfs_lfq_calendar()`.
  * **2.0.2** - **Modify**: Modify a html tag & Add class to html container element for `cfs_lfq_calendar()` generate calendar.
  * **2.0.0** - **Add**: Add Date & Time column on Edit page.
  * **1.2.6** - **Add**: Add [Select2](https://github.com/select2/select2) for `<select>` boxes on Settings page.
