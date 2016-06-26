@@ -76,7 +76,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     $dates  = array_unique($dates); // Remove some Duplicate Values(Day)
     $date   = new DateTime();
     $months = array();
-    for ($i = 0; $i < 3; ++$i) {
+    for ($i = 0; $i < 3; ++$i) {	  // 3 months Calendar
         if ($i > 0) {
             $date->modify('first day of +1 month');
         } else {
@@ -84,7 +84,14 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         }
         array_push($months, $date->format('Ymd'));
     }
-    cfs_lfq_calendar($dates, $months);  // 3 months Calendar
+	$args = array(
+		'dates'       => $dates,
+		'months'      => $months,
+		'weekdayBase' => 1,			// 0:sunday ～ 6:saturday
+		'element'     => 'div',
+		'class'       => ''
+	);
+	cfs_lfq_calendar($args);
 ?>
 ```
 #### Example: Sub Query For Calendar (Your Calendar Class)

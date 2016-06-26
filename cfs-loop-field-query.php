@@ -484,10 +484,22 @@ require_once plugin_dir_path(__FILE__) . 'CalendR/vendor/autoload.php';
 /*==================================================
     Event Calendar (archive)
 ================================================== */
-function cfs_lfq_calendar($eventdata, $months)
+function cfs_lfq_calendar($args)
 {
     if (CFS_LFQ_POST_TYPE):
-	    $weekdayBase = 1;                   // 0:sunday ～ 6:saturday
+		$defaults = array(
+			'dates'       => array(),
+			'months'      => array(),
+			'weekdayBase' => 0,	 // 0:sunday ～ 6:saturday
+			'element'     => 'div',
+			'class'       => ''
+		);
+		$d           = wp_parse_args( $args, $defaults );
+		$dates       = $d['dates'];
+		$months      = $d['months'];
+		$weekdayBase = $d['weekdayBase'];
+		$element     = $d['element'];
+		$class       = $d['class'];
 	    $locale      = new WP_Locale();
 	    $wd          = array_values($locale->weekday_abbrev);
 	    $wd_en       = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
@@ -496,7 +508,7 @@ function cfs_lfq_calendar($eventdata, $months)
 	    foreach ($months as $month):
 	        $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
 ?>
-    <section class="calendar">
+	<<?php echo esc_html($element); ?><?php if($class){echo ' class="' . esc_html($class) . '"';} ?>>
         <header>
         	<h4><?php echo $month->format('M'); ?></h4>
         </header>
@@ -519,7 +531,7 @@ function cfs_lfq_calendar($eventdata, $months)
                         <?php foreach ($week as $day): ?>
                             <td class="<?php echo mb_strtolower($day->format('D')); ?><?php if ($day->format('Ymd') === $today): ?> today<?php endif ?><?php if (!$month->includes($day)): ?> out-of-month<?php endif; ?>">
                                 <?php
-                                    if ($month->includes($day) && in_array($day->format('Ymd'), $eventdata)) {
+                                    if ($month->includes($day) && in_array($day->format('Ymd'), $dates)) {
                                         $href = get_post_type_date_link(CFS_LFQ_POST_TYPE, $day->format('Y'), $day->format('m'), $day->format('d'));
                                         $dayText = '<a href="' . $href . '"><span>' . $day->format('j') . '</span></a>';
                                     } else {
@@ -533,7 +545,7 @@ function cfs_lfq_calendar($eventdata, $months)
                 <?php endforeach ?>
             </tbody>
         </table>
-    </section>
+	</<?php echo esc_html($element); ?>>
 <?php
     	endforeach;
     endif;
