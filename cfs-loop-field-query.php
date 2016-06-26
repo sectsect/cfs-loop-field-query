@@ -488,23 +488,29 @@ function cfs_lfq_calendar($args)
 {
     if (CFS_LFQ_POST_TYPE):
 		$defaults = array(
-			'dates'       => array(),
-			'months'      => array(),
-			'weekdayBase' => 0,	 // 0:sunday ～ 6:saturday
-			'element'     => 'div',
-			'class'       => ''
+			'dates'        => array(),
+			'months'       => array(),
+			'weekdayLabel' => 'default',
+			'weekdayBase'  => 0,	 // 0:sunday ～ 6:saturday
+			'element'      => 'div',
+			'class'        => ''
 		);
-		$d           = wp_parse_args( $args, $defaults );
-		$dates       = $d['dates'];
-		$months      = $d['months'];
-		$weekdayBase = $d['weekdayBase'];
-		$element     = $d['element'];
-		$class       = $d['class'];
-	    $locale      = new WP_Locale();
-	    $wd          = array_values($locale->weekday_abbrev);
-	    $wd_en       = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
-	    $today       = date_i18n('Ymd');
-	    $factory     = new CalendR\Calendar();
+		$d            = wp_parse_args( $args, $defaults );
+		$dates        = $d['dates'];
+		$months       = $d['months'];
+		$weekdayLabel = $d['weekdayLabel'];
+		$weekdayBase  = $d['weekdayBase'];
+		$element      = $d['element'];
+		$class        = $d['class'];
+	    $locale       = new WP_Locale();
+		if($weekdayLabel == 'en'){
+			$wd = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+		}else{
+			$wd = array_values($locale->weekday_abbrev);
+		}
+	    $wd_en        = array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat');
+	    $today        = date_i18n('Ymd');
+	    $factory      = new CalendR\Calendar();
 		$num = 1;
 	    foreach ($months as $month):
 	        $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));

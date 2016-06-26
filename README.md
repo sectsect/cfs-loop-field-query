@@ -85,11 +85,12 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         array_push($months, $date->format('Ymd'));
     }
 	$args = array(
-		'dates'       => $dates,
-		'months'      => $months,
-		'weekdayBase' => 0,			// 0:sunday ～ 6:saturday	(integer) (optional) The start weekday. Default: 0
-		'element'     => 'div',		// (string) (optional) The element for wraping. Default: 'div'
-		'class'       => ''			// (string) (optional) The 'class' attribute value for wrap element. Default: ''
+		'dates'        => $dates,
+		'months'       => $months,
+		'weekdayLabel' => 'default',	// (string) (optional) Available value: 'default' or 'en' Note: 'default' is based on your wordpress locale setting.
+		'weekdayBase'  => 0,			// 0:sunday ～ 6:saturday	(integer) (optional) The start weekday. Default: 0
+		'element'      => 'div',		// (string) (optional) The element for wraping. Default: 'div'
+		'class'        => ''			// (string) (optional) The 'class' attribute value for wrap element. Default: ''
 	);
 	cfs_lfq_calendar($args);
 ?>
