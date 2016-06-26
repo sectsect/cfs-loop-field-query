@@ -53,7 +53,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 <?php endif;?>
 <?php wp_reset_postdata(); ?>
 ```
-#### Example: Sub Query For Calendar  
+#### Example: Sub Query For Calendar (Using `cfs_lfq_calendar()`)  
 ``` php
 <?php
     $dates   = array();
@@ -73,7 +73,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 
 <?php
     // Passing array to cfs_lfq Calendar Class.
-    $dates  = array_unique($dates); // Remove some Duplicate Values(Day)
+    $dates  = array_unique($dates);	// Remove some Duplicate Values(Day)
     $date   = new DateTime();
     $months = array();
     for ($i = 0; $i < 3; ++$i) {	  // 3 months Calendar
@@ -85,8 +85,8 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         array_push($months, $date->format('Ymd'));
     }
 	$args = array(
-		'dates'        => $dates,
-		'months'       => $months,
+		'dates'        => $dates,		// (array) (required)
+		'months'       => $months,		// (array) (required)
 		'weekdayLabel' => 'default',	// (string) (optional) Available value: 'default' or 'en' Note: 'default' is based on your wordpress locale setting.
 		'weekdayBase'  => 0,			// 0:sunday ～ 6:saturday	(integer) (optional) The start weekday. Default: 0
 		'element'      => 'div',		// (string) (optional) The element for wraping. Default: 'div'
@@ -95,7 +95,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 	cfs_lfq_calendar($args);
 ?>
 ```
-#### Example: Sub Query For Calendar (Your Calendar Class)
+#### Example: Sub Query For Calendar (Using Your Calendar Class)
 ``` php
 <?php
     $ary	 = array();
