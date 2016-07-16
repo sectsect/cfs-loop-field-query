@@ -82,11 +82,11 @@ You can get a sub query using the `new CFS_LFQ_Query()`
         } else {
             $date->modify('first day of this month');
         }
-        array_push($months, $date->format('Ymd'));
+        array_push($months, $date->format('Ym'));
     }
 	$args = array(
 		'dates'        => $dates,		// (array) (required) Array of event Date ('Ymd' format)
-		'months'       => $months,		// (array) (required) Array of month to generate calendar ('Ymd' format)
+		'months'       => $months,		// (array) (required) Array of month to generate calendar ('Ym' format)
 		'weekdayLabel' => 'default',	// (string) (optional) Available value: 'default' or 'en' Note: 'default' is based on your wordpress locale setting.
 		'weekdayBase'  => 0,			// (integer) (optional) The start weekday. 0:sunday ～ 6:saturday Default: 0
 		'element'      => 'div',		// (string) (optional) The element for wraping. Default: 'div'
@@ -141,7 +141,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 (array) (required) Array of event Date ('Ymd' format).
 
 * **months**
-(array) (required) Array of month to generate calendar ('Ymd' format)
+(array) (required) Array of month to generate calendar ('Ym' format)
 
 * **weekdayLabel**
 (string) (optional) Available value: `'default'` or `'en'`.  

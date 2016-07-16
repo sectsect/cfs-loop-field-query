@@ -497,7 +497,7 @@ function cfs_lfq_calendar($args)
 		);
 		$d = wp_parse_args( $args, $defaults );
 		extract( $d, EXTR_SKIP );
-		
+
 	    $locale = new WP_Locale();
 		if($weekdayLabel == 'en'){
 			$wd = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
@@ -509,6 +509,7 @@ function cfs_lfq_calendar($args)
 	    $factory      = new CalendR\Calendar();
 		$num = 1;
 	    foreach ($months as $month):
+			$month = $month . "01";
 	        $month = $factory->getMonth(date('Y', strtotime($month)), date('m', strtotime($month)));
 ?>
 	<<?php echo esc_html($element); ?> class="calendar-<?php echo $num; ?> calendar-<?php echo date('Y', strtotime($month)) . "-" . date('m', strtotime($month)) ?><?php if($class): ?> <?php echo esc_html($class); ?><?php endif; ?>">
