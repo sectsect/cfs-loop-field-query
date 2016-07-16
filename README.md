@@ -15,9 +15,9 @@
  1. `cd /path-to-your/wp-content/plugins/`
  2. `git clone git@github.com:sectsect/cfs-loop-field-query.git`
  3. Activate the plugin through the 'Plugins' menu in WordPress.  
- You can access the some setting by going to Settings -> CFS Loop Field Query.
- 4. Setting "Post Type Name", "Loop Field Name", "Date Field Name in Loop Feld".  
- ( Optional Field: "Taxonomy Name", "StartTime Field", "FinishTime Field" )  
+ You can access the some setting by going to `Settings` -> `CFS Loop Field Query`.
+ 4. Setting `Post Type Name`, `Loop Field Name`, `Date Field Name` in Loop Feld".  
+ ( Optional Field: `Taxonomy Name`, `StartTime Field`, `FinishTime Field` )  
  That's it:ok_hand: The main query of your select post types will be modified.
 
 #### Fields Structure Example
