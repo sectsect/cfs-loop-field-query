@@ -395,8 +395,8 @@ function cfs_lfq_options_page()
     if(is_admin()){
         global $pagenow;
         if (isset($_GET['post_type']) && $_GET['post_type'] == CFS_LFQ_POST_TYPE && is_admin() && $pagenow == 'edit.php')  {
-            add_filter( 'manage_posts_columns', 'cfs_lfq_manage_posts_columns' );
-	        add_action( 'manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2 );
+            add_filter('manage_posts_columns', 'cfs_lfq_manage_posts_columns');
+	        add_action('manage_posts_custom_column', 'cfs_lfq_add_column', 10, 2);
         }
     }
 
@@ -495,8 +495,8 @@ function cfs_lfq_calendar($args)
 			'element'      => 'div',
 			'class'        => ''
 		);
-		$d = wp_parse_args( $args, $defaults );
-		extract( $d, EXTR_SKIP );
+		$d = wp_parse_args($args, $defaults);
+		extract($d, EXTR_SKIP);
 
 	    $locale = new WP_Locale();
 		if($weekdayLabel == 'en'){

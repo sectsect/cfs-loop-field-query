@@ -10,8 +10,8 @@
 			<hr />
 			<h3>General Settings</h3>
 	        <?php
-	            settings_fields( 'cfs_lfq-settings-group' );
-	            do_settings_sections( 'cfs_lfq-settings-group' );
+	            settings_fields('cfs_lfq-settings-group');
+	            do_settings_sections('cfs_lfq-settings-group');
 	        ?>
 			<table class="form-table">
 				<tbody>
@@ -28,13 +28,13 @@
 								);
 								$output = 'names'; // names or objects, note names is the default
 								$operator = 'and'; // 'and' or 'or'
-								$post_types = get_post_types( $args, $output, $operator );
+								$post_types = get_post_types($args, $output, $operator);
 							// Add Default post "post"
 								$addpost = array('post' => 'post');
 								$post_types = array_merge($addpost, $post_types);
 							?>
 							<select id="cfs_lfq_posttype" name="cfs_lfq_posttype" style="width: 150px;">
-								<?php foreach ( $post_types as $post_type ): ?>
+								<?php foreach ($post_types as $post_type): ?>
 									<?php $selected = (get_option('cfs_lfq_posttype') == $post_type) ? "selected" : ""; ?>
 									<option value="<?php echo $post_type; ?>" <?php echo $selected; ?>><?php echo $post_type; ?></option>
 								<?php endforeach; ?>
@@ -53,14 +53,14 @@
 								);
 								$output = 'names'; // or objects
 								$operator = 'and'; // 'and' or 'or'
-								$taxonomies = get_taxonomies( $args, $output, $operator );
+								$taxonomies = get_taxonomies($args, $output, $operator);
 							// Add Default category
 								$addcat = array('category' => 'category');
 								$taxonomies = array_merge($addcat, $taxonomies);
 							?>
 							<select id="cfs_lfq_taxonomy" name="cfs_lfq_taxonomy" style="width: 150px;">
 								<option value="">Select...</option>
-								<?php foreach ( $taxonomies as $taxonomy ): ?>
+								<?php foreach ($taxonomies as $taxonomy): ?>
 									<?php $selected = (get_option('cfs_lfq_taxonomy') == $taxonomy) ? "selected" : ""; ?>
 									<option value="<?php echo $taxonomy; ?>" <?php echo $selected; ?>><?php echo $taxonomy; ?></option>
 								<?php endforeach; ?>
