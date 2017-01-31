@@ -182,6 +182,7 @@ cfs_lfq_calendar($args);
 
 ### Change log  
 - - -
+ * **2.0.4** - **Add**: Add composer.json.
  * **2.0.3** - **Add**: Add options to function `cfs_lfq_calendar()`.
  * **2.0.2** - **Modify**: Modify a html tag & Add class to html container element for `cfs_lfq_calendar()` generate calendar.
  * **2.0.0** - **Add**: Add Date & Time column on Edit page.
