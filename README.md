@@ -28,7 +28,7 @@
 - - -
 * If you want to apply to some existing article, resave the article.  
 * This Plugin includes adding Time-Picker Field in CFS. (Using [CFS Time picker add-on](https://github.com/ersoma/cfs-time))
-* Supports Page `is_date()` includes `is_year()` `is_month()` `is_day()`.
+* Support Pages for `is_date()` includes `is_year()` `is_month()` `is_day()`.
 * If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: The Day Full)
 
 ### Usage Example
