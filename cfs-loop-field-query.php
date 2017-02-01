@@ -480,7 +480,7 @@ function get_post_type_date_link($post_type, $year, $month = 0, $day = 0)
 /*==================================================
     Load CalendR Class
 ================================================== */
-require_once plugin_dir_path(__FILE__) . 'CalendR/vendor/autoload.php';
+require_once plugin_dir_path(__FILE__) . 'composer/vendor/autoload.php';
 /*==================================================
     Event Calendar (archive)
 ================================================== */
