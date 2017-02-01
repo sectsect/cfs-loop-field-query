@@ -182,19 +182,20 @@ cfs_lfq_calendar($args);
 
 ### Change log  
 - - -
- * **2.0.4** - **Add**: Add composer.json.
- * **2.0.3** - **Add**: Add options to function `cfs_lfq_calendar()`.
- * **2.0.2** - **Modify**: Modify a html tag & Add class to html container element for `cfs_lfq_calendar()` generate calendar.
- * **2.0.0** - **Add**: Add Date & Time column on Edit page.
- * **1.2.6** - **Add**: Add [Select2](https://github.com/select2/select2) for `<select>` boxes on Settings page.
- * **1.2.5** - **Update**: [CalendR](https://github.com/yohang/CalendR) PHP Class to 1.1.
- * **1.2.4** - **Add**: Add "today" class to current day for calendar.
- * **1.2.3** - **Add**: Add weekday class to table header for calendar.
- * **1.2.2** - **Add**: Automatically sort the loop field for the date in ascending order before you save the data.
- * **1.2.1** - **Change**: Some field type on Admin-Page from the `<input type="text">` to `<select>`.
- * **1.2.0** - **Add**: function for Calendar `cfs_lfq_calendar()`. Using [CalendR](https://github.com/yohang/CalendR) PHP Class.
- * **1.1.1** - **Change**: If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: the day full)
- * **1.1.0** - **Support**: Add support "StartTime" and "FinishTime" for each Date in Loop Field.
+ * **2.0.5** - Refactor composer dirctory & Update composer package.
+ * **2.0.4** - Add composer.json.
+ * **2.0.3** - Add options to function `cfs_lfq_calendar()`.
+ * **2.0.2** - Modify a html tag & Add class to html container element for `cfs_lfq_calendar()` generate calendar.
+ * **2.0.0** - Add Date & Time column on Edit page.
+ * **1.2.6** - Add [Select2](https://github.com/select2/select2) for `<select>` boxes on Settings page.
+ * **1.2.5** - Update [CalendR](https://github.com/yohang/CalendR) PHP Class to 1.1.
+ * **1.2.4** - Add "today" class to current day for calendar.
+ * **1.2.3** - Add weekday class to table header for calendar.
+ * **1.2.2** - Add Automatically sort the loop field for the date in ascending order before you save the data.
+ * **1.2.1** - Change Some field type on Admin-Page from the `<input type="text">` to `<select>`.
+ * **1.2.0** - Add function for Calendar `cfs_lfq_calendar()`. Using [CalendR](https://github.com/yohang/CalendR) PHP Class.
+ * **1.1.1** - Change If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: the day full)
+ * **1.1.0** - Support Add support "StartTime" and "FinishTime" for each Date in Loop Field.
  * **1.0.0** - Initial Release
 
 ### License
