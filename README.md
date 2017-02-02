@@ -59,7 +59,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     $dates   = array();
     $args    = array(
         'posts_per_page' => -1,
-        'calendar'       => true, // For get the data from not today but first day in this month.
+        'calendar'       => true, // Get the data for Not from the day but from the first day of the month.
     );
     $query = new CFS_LFQ_Query($args);
 ?>
@@ -73,7 +73,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 
 <?php
     // Passing array to cfs_lfq Calendar Class.
-    $dates  = array_unique($dates);	// Remove some Duplicate Values(Day)
+    $dates  = array_unique($dates);		// Remove some Duplicate Values(Day)
     $date   = new DateTime();
     $months = array();
     for ($i = 0; $i < 3; ++$i) {	  // 3 months Calendar
@@ -101,7 +101,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
     $ary	 = array();
     $args    = array(
         'posts_per_page'    => -1,
-        'calendar'          => true		// For get the data from not today but first day in this month.
+        'calendar'          => true		// Get the data for Not from the day but from the first day of the month.
     );
     $query = new CFS_LFQ_Query($args);
 ?>
