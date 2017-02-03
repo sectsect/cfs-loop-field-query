@@ -2,15 +2,15 @@
 
 ### Modify the Query to multiple dates in a post For [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) "Loop Field".
 
-#### Requirements
-- - -
+## Requirements
+
 * PHP 5.3+
 * Activation [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) Plugin.
 * Create a Loop Field and Date Field in the Loop Field using [CFS](https://wordpress.org/plugins/custom-field-suite/) Plugin.
 * A 6-pack of beer🍺 (optional, I guess.)
 
-#### Installation
-- - -
+## Installation
+
 
  1. `cd /path-to-your/wp-content/plugins/`
  2. `git clone git@github.com:sectsect/cfs-loop-field-query.git`
@@ -20,20 +20,20 @@
  ( Optional Field: `Taxonomy Name`, `StartTime Field`, `FinishTime Field` )  
  That's it:ok_hand: The main query of your select post types will be modified.
 
-#### Fields Structure Example
-- - -
+## Fields Structure Example
+
  <img src="images/screenshot.png" width="789" height="245">
 
-#### TIP
-- - -
+## TIP
+
 * If you want to apply to some existing article, resave the article.  
 * This Plugin includes adding Time-Picker Field in CFS. (Using [CFS Time picker add-on](https://github.com/ersoma/cfs-time))
 * Support Pages for `is_date()` includes `is_year()` `is_month()` `is_day()`.
 * If you have set the 'FinishTime', it does not appear that post when it passes your set time. (Default: The Day Full)
 
-### Usage Example
-- - -
-You can get a sub query using the `new CFS_LFQ_Query()`
+## Usage Example
+
+You can get a sub query with `new CFS_LFQ_Query()`
 
 #### Example: Sub Query
 ``` php
@@ -53,7 +53,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 <?php endif;?>
 <?php wp_reset_postdata(); ?>
 ```
-#### Example: Sub Query For Calendar (Using `cfs_lfq_calendar()`)  
+#### Example: Sub Query For Calendar w/ `cfs_lfq_calendar()`  
 ``` php
 <?php
     $dates   = array();
@@ -95,7 +95,7 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 	cfs_lfq_calendar($args);
 ?>
 ```
-#### Example: Sub Query For Calendar (Using Your Calendar Class)
+#### Example: Sub Query For Calendar w/ `Your Calendar Class`
 ``` php
 <?php
     $ary	 = array();
@@ -132,8 +132,8 @@ You can get a sub query using the `new CFS_LFQ_Query()`
 </time>
 ```
 
-### function
-- - -
+## function
+
 #### cfs_lfq_calendar($args)  
 ##### Parameters
 
@@ -176,12 +176,12 @@ cfs_lfq_calendar($args);
 ?>
 ```
 
-### NOTES for Developer
-- - -
+## NOTES for Developer
+
 * This Plugin does not hosting on the [wordpress.org](https://wordpress.org/) repo in order to prevent a flood of support requests from wide audience.
 
-### Change log  
-- - -
+## Change log  
+
  * **2.0.6** - Fix time settings for displayed status on Admin-column.
  * **2.0.5** - Refactor composer dirctory & Update composer package.
  * **2.0.4** - Add composer.json.
@@ -199,5 +199,9 @@ cfs_lfq_calendar($args);
  * **1.1.0** - Support Add support "StartTime" and "FinishTime" for each Date in Loop Field.
  * **1.0.0** - Initial Release
 
-### License
+## License
 See [LICENSE](https://github.com/sectsect/cfs-loop-field-query/blob/master/LICENSE) file.
+
+## Related Plugin
+I also have plugin with the same functionality for [Advanced Custom Field](https://wordpress.org/plugins/advanced-custom-fields/) Plugin.  
+#### <img src="https://github-sect.s3-ap-northeast-1.amazonaws.com/github.svg" width="22" height="auto"> [ACF Repeater Field Query](https://github.com/sectsect/acf-repeater-field-query)
