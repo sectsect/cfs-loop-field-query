@@ -182,6 +182,7 @@ cfs_lfq_calendar($args);
 
 ## Change log  
 
+ * **2.1.0** - Code refactoring.
  * **2.0.6** - Fix time settings for displayed status on Admin-column.
  * **2.0.5** - Refactor composer dirctory & Update composer package.
  * **2.0.4** - Add composer.json.
