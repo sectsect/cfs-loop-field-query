@@ -125,15 +125,18 @@ if ( ! class_exists( 'CFS_LFQ' ) ) {
 		    if (is_admin() || !$query->is_main_query()) {
 		        return;
 		    }
-		    if ($query->is_post_type_archive(CFS_LFQ_POST_TYPE)) {
-		        add_filter('posts_fields', 'event_fields', 10, 2);
-		        add_filter('posts_join', 'event_join', 10, 2);
-		        add_filter('posts_where', 'event_where', 10, 2);
-		        add_filter('posts_orderby', 'event_orderby', 10, 2);
-		        // if (!is_date()) {
-		        //     add_filter('posts_groupby', 'event_groupby', 10, 2);        // ========== Disabled the outputs to duplicate post on Page "post_type_archive". (It is sorted based on the last date to hold) ==========
-		        // }
-		    }
+
+			if (CFS_LFQ_POST_TYPE) {
+			    if ($query->is_post_type_archive(CFS_LFQ_POST_TYPE)) {
+			        add_filter('posts_fields', 'event_fields', 10, 2);
+			        add_filter('posts_join', 'event_join', 10, 2);
+			        add_filter('posts_where', 'event_where', 10, 2);
+			        add_filter('posts_orderby', 'event_orderby', 10, 2);
+			        // if (!is_date()) {
+			        //     add_filter('posts_groupby', 'event_groupby', 10, 2);        // ========== Disabled the outputs to duplicate post on Page "post_type_archive". (It is sorted based on the last date to hold) ==========
+			        // }
+			    }
+			}
 
 		    if (CFS_LFQ_TAXONOMY) {
 		        if ($query->is_tax(CFS_LFQ_TAXONOMY)) {
