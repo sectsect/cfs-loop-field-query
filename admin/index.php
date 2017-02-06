@@ -1,10 +1,5 @@
 <div class="wrap">
 	<h1>CFS Loop Field Query<span style="font-size: 10px; padding-left: 12px;">- For Events -</span></h1>
-
-	<?php if(isset($_GET['settings-updated'])): ?>
-		<span style="background: #fff; border: 2px solid #5bd535; border-radius: 5px; color: #888; padding: 3px 10px; display: inline-block; margin: 10px 0 0;">Save Settings.</span>
-	<?php endif; ?>
-
 	<section>
 		<form method="post" action="options.php">
 			<hr />
@@ -71,7 +66,14 @@
 			</table>
 			<hr />
 			<h3>Field Settings<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Field Name)</span></h3>
-			<table class="form-table">
+			<table id="field-settings" class="form-table">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Field</th>
+						<th>Field Type</th>
+					</tr>
+				</thead>
 				<tbody>
 					<tr>
 						<th scope="row">
@@ -80,34 +82,58 @@
 						<td>
 							<input type="text" id="cfs_lfq_dategroup" class="regular-text" name="cfs_lfq_dategroup" value="<?php echo get_option('cfs_lfq_dategroup'); ?>" style="width: 150px;">
 						</td>
+						<td>
+							Loop Field
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="cfs_lfq_datefield">- Date <span style="color: #c00; font-size: 10px; font-weight: normal;">(Require)</span><span style="display: block; font-size: 11px; font-weight: normal; margin-left: 10px;">Using "Date Picker"</span></label>
+							<label for="cfs_lfq_datefield">Date <span style="color: #c00; font-size: 10px; font-weight: normal;">(Require)</span></label>
 						</th>
 						<td>
 							<input type="text" id="cfs_lfq_datefield" class="regular-text" name="cfs_lfq_datefield" value="<?php echo get_option('cfs_lfq_datefield'); ?>" style="width: 150px;">
 						</td>
+						<td>
+							Date Picker
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="cfs_lfq_datefield">- StartTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span><span style="display: block; font-size: 11px; font-weight: normal; margin-left: 10px;">Using "Time Picker"</span></label>
+							<label for="cfs_lfq_datefield">StartTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span></label>
 						</th>
 						<td>
 							<input type="text" id="cfs_lfq_datefield" class="regular-text" name="cfs_lfq_starttimefield" value="<?php echo get_option('cfs_lfq_starttimefield'); ?>" style="width: 150px;">
 						</td>
+						<td>
+							Time Picker
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="cfs_lfq_datefield">- FinishTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span><span style="display: block; font-size: 11px; font-weight: normal; margin-left: 10px;">Using "Time Picker"</span></label>
+							<label for="cfs_lfq_datefield">FinishTime<span style="font-size: 11px; font-weight: normal; margin-left: 10px;">(Optional)</span></label>
 						</th>
 						<td>
 							<input type="text" id="cfs_lfq_datefield" class="regular-text" name="cfs_lfq_finishtimefield" value="<?php echo get_option('cfs_lfq_finishtimefield'); ?>" style="width: 150px;">
 						</td>
+						<td>
+							Time Picker
+						</td>
 					</tr>
 				</tbody>
 			</table>
-			<a href="https://github.com/sectsect/cfs-loop-field-query#-cfs-loop-field-query---for-events--" target="_blank">&gt; Document (Github)</a>
+			<hr>
+			<div class="link-doc">
+				<a href="https://github.com/sectsect/cfs-loop-field-query" target="_blank">
+					<dl>
+						<dt>
+							<img src="https://github-sect.s3-ap-northeast-1.amazonaws.com/github.svg" width="22" height="auto">
+						</dt>
+					    <dd>
+					        Document on Github
+					    </dd>
+					</dl>
+				</a>
+			</div>
 			<?php submit_button(); ?>
 		</form>
 	</section>
