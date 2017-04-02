@@ -1,4 +1,4 @@
-# ![Alt text](images/logo.jpg "SECT") CFS Loop Field Query - For Events -
+# <img src="https://github-sect.s3-ap-northeast-1.amazonaws.com/logo.svg" width="28" height="auto"> CFS Loop Field Query - For Events -
 
 ### Modify the Query to multiple dates in a post For [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) "Loop Field".
 
@@ -22,7 +22,7 @@
 
 ## Fields Structure Example
 
- <img src="images/screenshot.png" width="789" height="245">
+ <img src="https://github-sect.s3-ap-northeast-1.amazonaws.com/cfs-loop-field-query/screenshot.png" width="789" height="245">
 
 ## TIP
 
