@@ -2,6 +2,15 @@
 
 ### Modify the Query to multiple dates in a post For [Custom Field Suite](https://wordpress.org/plugins/custom-field-suite/) "Loop Field".
 
+## Features
+
+For each `Date and Time` set in the `Loop Field`, only the scheduled events are output to Archive Page.
+
+- One `Date and Time` set in the `Loop Field` is output as `one event`.
+- Displayed in order of the most recent event (`ASC`).
+- Closed events is not outputted.
+- Supply a `function` for calendar :date:
+
 ## Requirements
 
 * PHP 5.3+
