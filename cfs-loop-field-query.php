@@ -79,10 +79,7 @@ if ( ! class_exists( 'CFS_LFQ' ) ) {
 		        $postID = $params['post_data']['ID'];
 		        $fields = CFS()->get(CFS_LFQ_CFS_LOOP, $postID);
 		        $this->sortArrayByKey($fields, CFS_LFQ_CFS_LOOP_DATE);  // sorting by "date"
-
-		        $sql = 'DELETE FROM '.TABLE_NAME." WHERE post_id = $postID;";
-		        $sql = $wpdb->prepare($sql);
-		        $result = $wpdb->query($sql);
+				$result = $wpdb->delete( TABLE_NAME, array( 'post_id' => $postID ) );
 
 		        foreach ($fields as $field) {
 		            $date = str_replace('-', '', $field[CFS_LFQ_CFS_LOOP_DATE]);
@@ -97,9 +94,21 @@ if ( ! class_exists( 'CFS_LFQ' ) ) {
 		            } else {
 		                $ftime = 'null';
 		            }
-		            $sql = 'INSERT INTO '.TABLE_NAME." (post_id, date, starttime, finishtime) VALUES ($postID, $date, $stime, $ftime);";
-		            $sql = $wpdb->prepare($sql);
-		            $result = $wpdb->query($sql);
+					$result = $wpdb->insert(
+						TABLE_NAME,
+						array(
+							'post_id'    => $postID,
+							'date'       => $date,
+							'starttime'  => $stime,
+							'finishtime' => $ftime,
+						),
+						array(
+							'%d',
+							'%s',
+							'%s',
+							'%s',
+						)
+					);
 		        }
 		    }
 		}
@@ -111,9 +120,7 @@ if ( ! class_exists( 'CFS_LFQ' ) ) {
 		{
 		    if (get_post_type($postID) == CFS_LFQ_POST_TYPE && CFS()->get(CFS_LFQ_CFS_LOOP, $postID)) {
 		        global $wpdb;
-		        $sql = 'DELETE FROM '.TABLE_NAME." WHERE post_id = $postID;";
-		        $sql = $wpdb->prepare($sql);
-		        $result = $wpdb->query($sql);
+				$result = $wpdb->delete( TABLE_NAME, array( 'post_id' => $postID ) );
 		    }
 		}
 
