@@ -34,7 +34,7 @@ register_activation_hook( __FILE__, 'activate_cfs_loop_field_query' );
 register_deactivation_hook( __FILE__, 'deactivate_cfs_loop_field_query' );
 
 global $wpdb;
-define('TABLE_NAME', $wpdb->prefix.'cfs_loop_field_query');
+define('CFS_LFQ_TABLE_NAME', $wpdb->prefix.'cfs_loop_field_query');
 define('CFS_LFQ_POST_TYPE', get_option('cfs_lfq_posttype'));
 define('CFS_LFQ_TAXONOMY', get_option('cfs_lfq_taxonomy'));
 define('CFS_LFQ_CFS_LOOP', get_option('cfs_lfq_dategroup'));
@@ -79,7 +79,7 @@ if ( ! class_exists( 'CFS_LFQ' ) ) {
 		        $postID = $params['post_data']['ID'];
 		        $fields = CFS()->get(CFS_LFQ_CFS_LOOP, $postID);
 		        $this->sortArrayByKey($fields, CFS_LFQ_CFS_LOOP_DATE);  // sorting by "date"
-				$result = $wpdb->delete( TABLE_NAME, array( 'post_id' => $postID ) );
+				$result = $wpdb->delete( CFS_LFQ_TABLE_NAME, array( 'post_id' => $postID ) );
 
 		        foreach ($fields as $field) {
 		            $date = str_replace('-', '', $field[CFS_LFQ_CFS_LOOP_DATE]);
@@ -95,7 +95,7 @@ if ( ! class_exists( 'CFS_LFQ' ) ) {
 		                $ftime = 'null';
 		            }
 					$result = $wpdb->insert(
-						TABLE_NAME,
+						CFS_LFQ_TABLE_NAME,
 						array(
 							'post_id'    => $postID,
 							'date'       => $date,
@@ -120,7 +120,7 @@ if ( ! class_exists( 'CFS_LFQ' ) ) {
 		{
 		    if (get_post_type($postID) == CFS_LFQ_POST_TYPE && CFS()->get(CFS_LFQ_CFS_LOOP, $postID)) {
 		        global $wpdb;
-				$result = $wpdb->delete( TABLE_NAME, array( 'post_id' => $postID ) );
+				$result = $wpdb->delete( CFS_LFQ_TABLE_NAME, array( 'post_id' => $postID ) );
 		    }
 		}
 

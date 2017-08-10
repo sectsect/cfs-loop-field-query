@@ -35,7 +35,7 @@ class Cfs_Loop_Field_Query_Activator {
 	    $installed_ver = get_option('cfs_lfq_version');
 	    $charset_collate = $wpdb->get_charset_collate();
 	    if ($installed_ver != $cfs_lfq_db_version) {
-	        $sql = 'CREATE TABLE '.TABLE_NAME." (
+	        $sql = 'CREATE TABLE '.CFS_LFQ_TABLE_NAME." (
 	              event_id bigint(20) NOT NULL AUTO_INCREMENT,
 	              post_id bigint(20) NOT NULL,
 	              date date NOT NULL,
