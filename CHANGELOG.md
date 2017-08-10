@@ -1,5 +1,8 @@
 # Change Log
 
+## [v2.1.3](https://github.com/sectsect/cfs-loop-field-query/tree/v2.1.3) (2017-08-10)
+[Full Changelog](https://github.com/sectsect/cfs-loop-field-query/compare/v2.1.2...v2.1.3)
+
 ## [v2.1.2](https://github.com/sectsect/cfs-loop-field-query/tree/v2.1.2) (2017-07-23)
 [Full Changelog](https://github.com/sectsect/cfs-loop-field-query/compare/v2.1.1...v2.1.2)
 
