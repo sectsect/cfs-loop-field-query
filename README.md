@@ -47,7 +47,7 @@ You can get a sub query with `new CFS_LFQ_Query()`
 #### Example: Sub Query
 ``` php
 <?php
-    $ary	 = array();
+    $ary     = array();
     $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
     $perpage = 10;
     $offset  = ($page - 1) * $perpage;
@@ -83,16 +83,7 @@ You can get a sub query with `new CFS_LFQ_Query()`
 <?php
     // Passing array to cfs_lfq Calendar Class.
     $dates  = array_unique($dates);		// Remove some Duplicate Values(Day)
-    $date   = new DateTime();
-    $months = array();
-    for ($i = 0; $i < 3; ++$i) {	  // 3 months Calendar
-        if ($i > 0) {
-            $date->modify('first day of +1 month');
-        } else {
-            $date->modify('first day of this month');
-        }
-        array_push($months, $date->format('Ym'));
-    }
+    $months = get_months_from_now(3);
 	$args = array(
 		'dates'        => $dates,		// (array) (required) Array of event Date ('Ymd' format)
 		'months'       => $months,		// (array) (required) Array of month to generate calendar ('Ym' format)
@@ -107,7 +98,7 @@ You can get a sub query with `new CFS_LFQ_Query()`
 #### Example: Sub Query For Calendar w/ `Your Calendar Class`
 ``` php
 <?php
-    $ary	 = array();
+    $ary     = array();
     $args    = array(
         'posts_per_page'    => -1,
         'calendar'          => true		// Get the data for Not from the day but from the first day of the month.
@@ -143,14 +134,31 @@ You can get a sub query with `new CFS_LFQ_Query()`
 
 ## function
 
+#### get_months_from_now($num)  
+##### Parameters
+
+* **num**
+(integer) (required) Number of months to get.  
+Default: `1`
+
+##### Return Values
+
+(array)  
+`Ym` formatted.
+
+```php
+$months = get_months_from_now(3);
+```
+
+
 #### cfs_lfq_calendar($args)  
 ##### Parameters
 
 * **dates**
-(array) (required) Array of event Date ('Ymd' format).
+(array) (required) Array of event Date (`Ymd` format).
 
 * **months**
-(array) (required) Array of month to generate calendar ('Ym' format)
+(array) (required) Array of month to generate calendar (`Ym` format)
 
 * **weekdayLabel**
 (string) (optional) Available value: `'default'` or `'en'`.  
@@ -158,7 +166,7 @@ Default: `'default'`
 :memo: `'default'` is based on your wordpress locale setting.
 
 * **weekdayBase**
-(integer) (optional) The start weekday. 0:sunday ～ 6:saturday  
+(integer) (optional) The start weekday. `0:sunday ～ 6:saturday`  
 Default: `0`
 
 * **element**
@@ -172,7 +180,6 @@ Default: `''`
 ##### Example
 
 ```php
-<?php
 $args = array(
 	'dates'        => $dates,
 	'months'       => $months,
@@ -182,7 +189,6 @@ $args = array(
 	'class'        => 'myclass'
 );
 cfs_lfq_calendar($args);
-?>
 ```
 
 ## NOTES for Developer
