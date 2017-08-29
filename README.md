@@ -64,63 +64,51 @@ You can get a sub query with `new CFS_LFQ_Query()`
 ```
 #### Example: Sub Query For Calendar w/ `cfs_lfq_calendar()`  
 ``` php
-<?php
-    $dates   = array();
-    $args    = array(
-        'posts_per_page' => -1,
-        'calendar'       => true, // Get the data for Not from the day but from the first day of the month.
-    );
-    $query = new CFS_LFQ_Query($args);
-?>
-<?php if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post(); ?>
-<?php
+$dates   = array();
+$args    = array(
+    'posts_per_page' => -1,
+    'calendar'       => true,       // Get the data for Not from the day but from the first day of the month.
+);
+$query = new CFS_LFQ_Query($args);
+if ($query->have_posts()) { while ($query->have_posts()) { $query->the_post();
     $date = date('Ymd', strtotime($post->date));
     array_push($dates, $date);
-?>
-<?php endwhile; endif; ?>
-<?php wp_reset_postdata(); ?>
+}}
+wp_reset_postdata();
 
-<?php
-    // Passing array to cfs_lfq Calendar Class.
-    $dates  = array_unique($dates);		// Remove some Duplicate Values(Day)
-    $months = get_months_from_now(3);
-	$args = array(
-		'dates'        => $dates,		// (array) (required) Array of event Date ('Ymd' format)
-		'months'       => $months,		// (array) (required) Array of month to generate calendar ('Ym' format)
-		'weekdayLabel' => 'default',	// (string) (optional) Available value: 'default' or 'en' Note: 'default' is based on your wordpress locale setting.
-		'weekdayBase'  => 0,			// (integer) (optional) The start weekday. 0:sunday ～ 6:saturday Default: 0
-		'element'      => 'div',		// (string) (optional) The element for wraping. Default: 'div'
-		'class'        => ''			// (string) (optional) The 'class' attribute value for wrap element. Default: ''
-	);
-	cfs_lfq_calendar($args);
-?>
+// Passing array to cfs_lfq Calendar Class.
+$dates  = array_unique($dates);		// Remove some Duplicate Values(Day)
+$months = get_months_from_now(3);
+$args = array(
+    'dates'        => $dates,		// (array) (required) Array of event Date ('Ymd' format)
+    'months'       => $months,		// (array) (required) Array of month to generate calendar ('Ym' format)
+    'weekdayLabel' => 'default',	// (string) (optional) Available value: 'default' or 'en' Note: 'default' is based on your wordpress locale setting.
+    'weekdayBase'  => 0,			// (integer) (optional) The start weekday. 0:sunday ～ 6:saturday Default: 0
+    'element'      => 'div',		// (string) (optional) The element for wraping. Default: 'div'
+    'class'        => ''			// (string) (optional) The 'class' attribute value for wrap element. Default: ''
+);
+cfs_lfq_calendar($args);
 ```
 #### Example: Sub Query For Calendar w/ `Your Calendar Class`
 ``` php
-<?php
-    $ary     = array();
-    $args    = array(
-        'posts_per_page'    => -1,
-        'calendar'          => true		// Get the data for Not from the day but from the first day of the month.
-    );
-    $query = new CFS_LFQ_Query($args);
-?>
-<?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
-<?php
+$ary     = array();
+$args    = array(
+    'posts_per_page'    => -1,
+    'calendar'          => true		// Get the data for Not from the day but from the first day of the month.
+);
+$query = new CFS_LFQ_Query($args);
+if ( $query->have_posts() ) { while ( $query->have_posts() ) { $query->the_post();
     $date       = date('Ymd', strtotime($post->date));
     $post_id    = $post->ID;
     $perm       = get_the_permalink();
     $title      = get_the_title();
     array_push($ary, array('date' => $date, 'id' => $post_id, 'permlink' => $perm, 'title' => $title));
-?>
-<?php endwhile; endif; ?>
-<?php wp_reset_postdata(); ?>
+}}
+wp_reset_postdata();
 
-<?php
-    // Passing array to your Calendar Class.
-    require_once 'Calendar/Month/Weeks.php';
-    calendar($ary, 0);
-?>
+// Passing array to your Calendar Class.
+require_once 'Calendar/Month/Weeks.php';
+calendar($ary, 0);
 ```
 #### Example: Get the "Date", "StartTime" and "FinishTime"
 ``` php
