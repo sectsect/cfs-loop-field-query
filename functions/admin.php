@@ -5,7 +5,7 @@
 add_action('admin_menu', 'cfs_lfq_menu');
 function cfs_lfq_menu()
 {
-    $page_hook_suffix = add_options_page('CFS Loop Field Query', 'CFS Loop Field Query', 8, 'cfs_lfq_menu', 'cfs_lfq_options_page');
+    $page_hook_suffix = add_options_page('CFS Loop Field Query', 'CFS Loop Field Query', 'manage_options', 'cfs_lfq_menu', 'cfs_lfq_options_page');
     add_action('admin_print_styles-' . $page_hook_suffix, 'cfs_lfq_admin_styles');
     add_action('admin_print_scripts-' . $page_hook_suffix, 'cfs_lfq_admin_scripts');    // @ https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/wp_enqueue_script#.E3.83.97.E3.83.A9.E3.82.B0.E3.82.A4.E3.83.B3.E7.AE.A1.E7.90.86.E7.94.BB.E9.9D.A2.E3.81.AE.E3.81.BF.E3.81.A7.E3.82.B9.E3.82.AF.E3.83.AA.E3.83.97.E3.83.88.E3.82.92.E3.83.AA.E3.83.B3.E3.82.AF.E3.81.99.E3.82.8B
     add_action('admin_init', 'register_cfs_lfq_settings');
