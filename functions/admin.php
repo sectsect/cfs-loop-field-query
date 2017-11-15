@@ -12,12 +12,12 @@ function cfs_lfq_menu()
 }
 function cfs_lfq_admin_styles()
 {
-    wp_enqueue_style('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css', array());
+    wp_enqueue_style('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css', array());
 	wp_enqueue_style('admin-options', plugin_dir_url(dirname(__FILE__)) . 'admin/css/admin-options.css', array());
 }
 function cfs_lfq_admin_scripts()
 {
-    wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js', array('jquery'));
+    wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js', array('jquery'));
     wp_enqueue_script('script', plugin_dir_url(dirname(__FILE__)) . 'admin/js/script.js', array('select2'));
 }
 function register_cfs_lfq_settings()
