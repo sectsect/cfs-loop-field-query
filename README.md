@@ -48,13 +48,13 @@ You can get a sub query with `new CFS_LFQ_Query()`
 ``` php
 <?php
     $ary     = array();
-    $page    = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    $page    = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
     $perpage = 10;
-    $offset  = ($page - 1) * $perpage;
+    $offset  = ( $page - 1 ) * $perpage;
     $args    = array(
         'posts_per_page' => $perpage
     );
-    $query = new CFS_LFQ_Query($args);
+    $query = new CFS_LFQ_Query( $args );
 ?>
 <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
     // something
@@ -69,54 +69,54 @@ $args    = array(
     'posts_per_page' => -1,
     'calendar'       => true,       // Get the data for Not from the day but from the first day of the month.
 );
-$query = new CFS_LFQ_Query($args);
-if ($query->have_posts()) { while ($query->have_posts()) { $query->the_post();
-    $date = date('Ymd', strtotime($post->date));
-    array_push($dates, $date);
+$query = new CFS_LFQ_Query( $args );
+if ( $query->have_posts() ) { while ( $query->have_posts() ) { $query->the_post();
+    $date = date( 'Ymd', strtotime( $post->date ) );
+    array_push( $dates, $date );
 }}
 wp_reset_postdata();
 
 // Passing array to cfs_lfq Calendar Class.
-$dates  = array_unique($dates);		// Remove some Duplicate Values(Day)
-$months = get_months_from_now(3);
+$dates  = array_unique( $dates );		// Remove some Duplicate Values(Day)
+$months = get_months_from_now( 3 );
 $args = array(
     'dates'        => $dates,		// (array) (required) Array of event Date ('Ymd' format)
     'months'       => $months,		// (array) (required) Array of month to generate calendar ('Ym' format)
     'weekdayLabel' => 'default',	// (string) (optional) Available value: 'default' or 'en' Note: 'default' is based on your wordpress locale setting.
-    'weekdayBase'  => 0,			// (integer) (optional) The start weekday. 0:sunday ～ 6:saturday Default: 0
+    'weekdayBase'  => 0,		// (integer) (optional) The start weekday. 0:sunday ～ 6:saturday Default: 0
     'element'      => 'div',		// (string) (optional) The element for wraping. Default: 'div'
-    'class'        => ''			// (string) (optional) The 'class' attribute value for wrap element. Default: ''
+    'class'        => ''		// (string) (optional) The 'class' attribute value for wrap element. Default: ''
 );
-cfs_lfq_calendar($args);
+cfs_lfq_calendar( $args );
 ```
 #### Example: Sub Query For Calendar w/ `Your Calendar Class`
 ``` php
 $ary     = array();
 $args    = array(
-    'posts_per_page'    => -1,
-    'calendar'          => true		// Get the data for Not from the day but from the first day of the month.
+    'posts_per_page' => -1,
+    'calendar'       => true		// Get the data for Not from the day but from the first day of the month.
 );
-$query = new CFS_LFQ_Query($args);
+$query = new CFS_LFQ_Query( $args );
 if ( $query->have_posts() ) { while ( $query->have_posts() ) { $query->the_post();
-    $date       = date('Ymd', strtotime($post->date));
-    $post_id    = $post->ID;
-    $perm       = get_the_permalink();
-    $title      = get_the_title();
-    array_push($ary, array('date' => $date, 'id' => $post_id, 'permlink' => $perm, 'title' => $title));
+    $date    = date( 'Ymd', strtotime( $post->date ) );
+    $post_id = $post->ID;
+    $perm    = get_the_permalink();
+    $title   = get_the_title();
+    array_push( $ary, array('date' => $date, 'id' => $post_id, 'permlink' => $perm, 'title' => $title) );
 }}
 wp_reset_postdata();
 
 // Passing array to your Calendar Class.
 require_once 'Calendar/Month/Weeks.php';
-calendar($ary, 0);
+calendar( $ary, 0 );
 ```
 #### Example: Get the "Date", "StartTime" and "FinishTime"
 ``` php
 <div id="date">
-    <?php echo date('Y-m-d', strtotime($post->date)); ?>
+    <?php echo date( 'Y-m-d', strtotime( $post->date ) ); ?>
 </div>
 <time>
-    <?php echo date("H:i", strtotime($post->starttime)); ?> ~ <?php echo date("H:i", strtotime($post->finishtime)); ?>
+    <?php echo date( "H:i", strtotime( $post->starttime ) ); ?> ~ <?php echo date( "H:i", strtotime( $post->finishtime ) ); ?>
 </time>
 ```
 
@@ -135,7 +135,7 @@ Default: `1`
 `Ym` formatted.
 
 ```php
-$months = get_months_from_now(3);
+$months = get_months_from_now( 3 );
 ```
 
 
@@ -176,7 +176,7 @@ $args = array(
 	'element'      => 'div',
 	'class'        => 'myclass'
 );
-cfs_lfq_calendar($args);
+cfs_lfq_calendar( $args );
 ```
 
 ## NOTES for Developer
